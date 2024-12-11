@@ -1,8 +1,73 @@
 /* Global */
-html,
-body {
-  padding: 7px;
+
+/* #####################################################################*/
+.container-fluid {
+  padding: 0;
 }
+/* Navbar */
+.navbar {
+  background-color: #333333;
+  height: 3rem;
+  margin-bottom: 14px;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.navbar-recipes {
+  font-size: 1rem;
+  color: white;
+}
+
+.navbar-icon {
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.theme-toggle {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.dark-theme {
+  background-color: #121212;
+  color: white;
+}
+
+.dark-theme .navbar {
+  background-color: #1f1f1f;
+}
+
+.moon-icon,
+.sun-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 575px) {
+  .navbar .d-flex {
+    display: none !important;
+  }
+  .burger-menu {
+    display: block !important;
+  }
+}
+.burger-menu {
+  position: absolute;
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+  right: 10px;
+}
+
 /* #####################################################################*/
 
 /* Recipes */
@@ -11,6 +76,8 @@ body {
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
+  margin-left: 14px;
+  margin-right: 14px;
 }
 
 .card {
