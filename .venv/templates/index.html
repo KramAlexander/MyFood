@@ -1,14 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyFood</title>
-    <link href="{{ url_for('static', filename='styles/style.css')}} "rel="stylesheet" />
-</head>
-
-<body>
-    <h1>Hello World</h1>
-</body>
-
-</html>
+{% extends "base.html" %} {% block title %}Home - My Website{% endblock %} {%
+block content %}
+<div class="container-{breakpoint}">
+  <div class="card-container">
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 1</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 1.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 2</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 2.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 3</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 3.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 4</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 4.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 5</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 5.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 6</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 6.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 7</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 7.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="https://via.placeholder.com/300"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Recipe 8</h5>
+        <p class="card-time">45 min</p>
+        <p class="card-text">This is a description of Recipe 8.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+/* Global */
+html,
+body {
+  padding: 7px;
+}
+/* #####################################################################*/
+
+/* Recipes */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.card {
+  flex: 1 1 calc(25% - 16px);
+  min-width: 200px;
+  box-sizing: border-box;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 10px;
+  position: relative;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card-header {
+  padding: 0;
+}
+
+.card-time {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+@media (max-width: 991px) {
+  .card {
+    flex: 1 1 calc(33.33% - 16px);
+    max-width: calc(33.33% - 16px);
+  }
+}
+
+@media (max-width: 767px) {
+  .card {
+    flex: 1 1 calc(50% - 16px);
+    max-width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 575px) {
+  .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+/* #####################################################################*/
