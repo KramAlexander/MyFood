@@ -71,6 +71,173 @@
 /* #####################################################################*/
 
 /* Recipes */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #28a745;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.plus-sign {
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 50%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  color: #555;
+}
+
+.recipe-inputs {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 8px;
+  box-sizing: border-box;
+}
+
+.recipe-inputs:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.ratings-wrapper {
+  max-width: fit-content;
+  margin: 0 auto 20px auto;
+  padding: 0 10px;
+}
+
+.ratings {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.ratings span {
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  font-size: 50px;
+  padding: 10px;
+}
+
+.ratings span:hover ~ span {
+  color: orange;
+}
+
+.ratings span:hover {
+  color: orange;
+  transform: scale(1.3);
+}
+
+.ratings span[data-clicked] {
+  color: orange;
+}
+.ratings span[data-clicked] ~ span {
+  color: orange;
+}
+.submit-btn-container {
+  display: flex;
+  justify-content: center; /* Zentriert horizontal */
+}
+.submit-btn {
+  padding: 0.8em 1.8em;
+  border: 2px solid black;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  transition: 0.3s;
+  z-index: 1;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: black;
+  cursor: pointer;
+}
+
+.submit-btn::before {
+  content: "";
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: black;
+  transition: 2s ease;
+  display: block;
+  z-index: -1;
+}
+
+.submit-btn:hover::before {
+  width: 105%;
+}
+
+.submit-btn:hover {
+  color: white;
+  transition: color 0.3s ease 0.1s;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;

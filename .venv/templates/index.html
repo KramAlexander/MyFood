@@ -1,103 +1,171 @@
 {% extends "base.html" %} {% block title %}Home - My Website{% endblock %} {%
-block content %}
-<div class="container-{breakpoint}">
-  <div class="card-container">
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 1</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 1.</p>
+  block content %}
+  <div class="container-{breakpoint}">
+    <div class="floating-button" onclick="openForm()"">
+    <span class="plus-sign">+</span>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Create a Recipe</h2>
+        <form>
+          <div class="form-group">
+            <label for="name-input">Rezept-Name</label><br>
+            <input type="text" class="recipe-inputs" id="name-input" name="name-input" placeholder="Enter recipe name"/>
+          </div>
+          <div class="form-group">
+            <label for="description-input">Description</label><br>
+            <input type="text" class="recipe-inputs" id="description-input" name="description-input" placeholder="Enter recipe description"/>
+          </div>
+          <div class="form-group">
+            <label for="number-input">Duration (minutes)</label><br>
+            <input type="number" class="recipe-inputs" id="number-input" name="number-input" placeholder="Enter duration"/>
+          </div>
+          <div class="form-group">
+            <label for="difficulty-input">Difficulty</label><br>
+            <div class="ratings-wrapper">
+            <div class="ratings">
+              <span data-rating="5">&#9733;</span>
+              <span data-rating="4">&#9733;</span>
+              <span data-rating="3">&#9733;</span>
+              <span data-rating="2">&#9733;</span>
+              <span data-rating="1">&#9733;</span>
+            </div>
+          </div>
+          </div>
+          <div class="submit-btn-container">
+            <button type="submit" class="submit-btn">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 2</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 2.</p>
+    
+      <div class="card-container">
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 1</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 1.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 2</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 2.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 3</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 3.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 4</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 4.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 5</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 5.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 6</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 6.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 7</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 7.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://via.placeholder.com/300"
+            class="card-img-top"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Recipe 8</h5>
+            <p class="card-time">45 min</p>
+            <p class="card-text">This is a description of Recipe 8.</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 3</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 3.</p>
-      </div>
-    </div>
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 4</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 4.</p>
-      </div>
-    </div>
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 5</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 5.</p>
-      </div>
-    </div>
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 6</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 6.</p>
-      </div>
-    </div>
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 7</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 7.</p>
-      </div>
-    </div>
-    <div class="card">
-      <img
-        src="https://via.placeholder.com/300"
-        class="card-img-top"
-        alt="Recipe Image"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Recipe 8</h5>
-        <p class="card-time">45 min</p>
-        <p class="card-text">This is a description of Recipe 8.</p>
-      </div>
-    </div>
+    <script>
+      function openForm() {
+        document.getElementById("myModal").style.display = "flex";
+      }
+      
+      function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+      }
+  
+  
+  const stars = document.querySelectorAll(".ratings span");
+  let ratings = [];
+  
+  for(let star of stars){
+    star.addEventListener("click",function() {
+      stars.forEach((siblingStar) => siblingStar.removeAttribute("data-clicked"));
+      this.setAttribute("data-clicked","true");
+      let rating = this.dataset.rating;
+      let data = { 
+        "stars": rating
+      }
+      ratings.push(data);
+      localStorage.setItem("rating",JSON.stringify(ratings))
+  
+    })
+  }
+      </script>
+    {% endblock %}
   </div>
-</div>
-{% endblock %}
+  
