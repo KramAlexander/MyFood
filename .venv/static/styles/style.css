@@ -195,24 +195,47 @@ label {
 .ratings span[data-clicked] ~ span {
   color: orange;
 }
+.submit-btn-container {
+  display: flex;
+  justify-content: center; /* Zentriert horizontal */
+}
 .submit-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
+  padding: 0.8em 1.8em;
+  border: 2px solid black;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  transition: 0.3s;
+  z-index: 1;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: black;
   cursor: pointer;
-  margin-top: 20px;
+}
+
+.submit-btn::before {
+  content: "";
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: black;
+  transition: 2s ease;
+  display: block;
+  z-index: -1;
+}
+
+.submit-btn:hover::before {
+  width: 105%;
 }
 
 .submit-btn:hover {
-  background-color: #0056b3;
-}
-
-.submit-btn:focus {
-  outline: none;
+  color: white;
+  transition: color 0.3s ease 0.1s; 
 }
 
 .card-container {
