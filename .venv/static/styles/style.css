@@ -163,36 +163,38 @@ label {
   border-color: #007bff;
 }
 
-input[type="range"] {
-  width: 100%;
-  margin-top: 8px;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 8px;
-  background: #ddd;
-  border-radius: 5px;
+.ratings-wrapper {
+  max-width: fit-content;
+  margin: 0 auto 20px auto;
+  padding: 0 10px;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #007bff;
-  border-radius: 50%;
+.ratings {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.ratings span {
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  font-size: 50px;
+  padding: 10px;
 }
 
-input[type="range"]:focus {
-  outline: none;
+.ratings span:hover ~ span {
+  color: orange;
 }
 
-#difficulty-output {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 16px;
-  color: #555;
+.ratings span:hover {
+  color: orange;
+  transform: scale(1.3);
 }
 
+.ratings span[data-clicked] {
+  color: orange;
+}
+.ratings span[data-clicked] ~ span {
+  color: orange;
+}
 .submit-btn {
   width: 100%;
   padding: 12px;

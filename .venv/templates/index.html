@@ -6,7 +6,6 @@ block content %}
   </div>
   <div id="myModal" class="modal">
     <div class="modal-content">
-      <!-- Close Button -->
       <span class="close" onclick="closeForm()">&times;</span>
       <h2>Create a Recipe</h2>
       <form>
@@ -24,8 +23,15 @@ block content %}
         </div>
         <div class="form-group">
           <label for="difficulty-input">Difficulty</label><br>
-          <input type="range" min="1" max="100" value="50" class="recipe-inputs" id="difficulty-input" name="difficulty-input"/>
-          <span id="difficulty-output">50</span>
+          <div class="ratings-wrapper">
+          <div class="ratings">
+            <span data-rating="5">&#9733;</span>
+            <span data-rating="4">&#9733;</span>
+            <span data-rating="3">&#9733;</span>
+            <span data-rating="2">&#9733;</span>
+            <span data-rating="1">&#9733;</span>
+          </div>
+        </div>
         </div>
         <button type="submit" class="submit-btn">Submit</button>
       </form>
@@ -131,24 +137,32 @@ block content %}
       </div>
     </div>
   </div>
-  <script>// Function to open the modal
+  <script>
     function openForm() {
       document.getElementById("myModal").style.display = "flex";
     }
     
-    // Function to close the modal
     function closeForm() {
       document.getElementById("myModal").style.display = "none";
     }
 
-    // Difficulty slider value update
-    const difficultyInput = document.getElementById('difficulty-input');
-    const difficultyOutput = document.getElementById('difficulty-output');
 
-    difficultyInput.addEventListener('input', function () {
-      difficultyOutput.textContent = difficultyInput.value;
-    });
+const stars = document.querySelectorAll(".ratings span");
+let ratings = [];
 
+for(let star of stars){
+  star.addEventListener("click",function() {
+    stars.forEach((siblingStar) => siblingStar.removeAttribute("data-clicked"));
+    this.setAttribute("data-clicked","true");
+    let rating = this.dataset.rating;
+    let data = { 
+      "stars": rating
+    }
+    ratings.push(data);
+    localStorage.setItem("rating",JSON.stringify(ratings))
+
+  })
+}
     </script>
   {% endblock %}
 </div>
