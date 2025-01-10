@@ -20,10 +20,35 @@
           <div class="form-group">
             <label for="ingredients-input">Ingredients</label><br>
             <div class="ingredients-form">
-
+              <!-- Ingredients list will appear here -->
+              <button class="ingredients-btn" type="button" onclick="openIngredientsModal()">+</button>
             </div>
-            <button class="ingredients-btn">+</button>         
+            
           </div>
+          
+          <!-- new form for adding ingredients -->
+          <div id="ingredientsModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeIngredientsModal()">&times;</span>
+              <h2>Add Ingredient</h2>
+              <form id="ingredientForm">
+                <div class="form-group">
+                  <label for="ingredient-name">Ingredient Name</label>
+                  <input type="text" id="ingredient-name" class="recipe-inputs" placeholder="Enter ingredient name" required />
+                </div>
+                <div class="form-group">
+                  <label for="ingredient-amount">Amount</label>
+                  <input type="text" id="ingredient-amount" class="recipe-inputs" placeholder="Enter amount (e.g., 2 cups)" required />
+                </div>
+                <div class="submit-btn-container">
+                  <button type="button" class="submit-btn" onclick="addIngredient()">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+
+          
           <div class="form-group">
             <label for="number-input">Duration (minutes)</label><br>
             <input type="number" class="recipe-inputs" id="number-input" name="number-input" placeholder="Enter duration"/>
@@ -146,6 +171,7 @@
         </div>
       </div>
     </div>
+  </div>
     <script>
       function openForm() {
         document.getElementById("myModal").style.display = "flex";
@@ -156,23 +182,69 @@
       }
   
   
-  const stars = document.querySelectorAll(".ratings span");
-  let ratings = [];
-  
-  for(let star of stars){
-    star.addEventListener("click",function() {
-      stars.forEach((siblingStar) => siblingStar.removeAttribute("data-clicked"));
-      this.setAttribute("data-clicked","true");
-      let rating = this.dataset.rating;
-      let data = { 
-        "stars": rating
+      const stars = document.querySelectorAll(".ratings span");
+      let ratings = [];
+      
+      for(let star of stars){
+        star.addEventListener("click",function() {
+          stars.forEach((siblingStar) => siblingStar.removeAttribute("data-clicked"));
+          this.setAttribute("data-clicked","true");
+          let rating = this.dataset.rating;
+          let data = { 
+            "stars": rating
+          }
+          ratings.push(data);
+          localStorage.setItem("rating",JSON.stringify(ratings))
+      
+        })
       }
-      ratings.push(data);
-      localStorage.setItem("rating",JSON.stringify(ratings))
-  
-    })
-  }
-      </script>
+      function openIngredientsModal() {
+        const modal = document.getElementById("ingredientsModal");
+        const form = document.getElementById("ingredientForm");
+
+        if (modal) {
+          modal.style.display = "flex";
+        } else {
+          console.error("Ingredients modal not found.");
+        }
+    }
+
+      function closeIngredientsModal() {
+          const modal = document.getElementById("ingredientsModal");
+
+          if (modal) {
+              document.getElementById("ingredient-name").value = '';
+              document.getElementById("ingredient-amount").value = '';
+              modal.style.display = "none";
+      
+          } else {
+              console.error("Ingredients modal not found.");
+      }
+    }
+
+
+    function addIngredient() {
+    console.log("Adding ingredient");
+    const name = document.getElementById("ingredient-name").value.trim();
+    const amount = document.getElementById("ingredient-amount").value.trim();
+
+    if (name && amount) {
+        const ingredientDiv = document.createElement("div");
+        ingredientDiv.className = "ingredient-item";
+        ingredientDiv.innerHTML = `<span>${name} | ${amount}</span>`;
+
+        const ingredientsForm = document.querySelector(".ingredients-form");
+        const addButton = document.querySelector(".ingredients-btn");
+
+        ingredientsForm.insertBefore(ingredientDiv, addButton);
+
+        closeIngredientsModal();
+    } else {
+        alert("Please fill out both fields.");
+    }
+}
+
+    </script>
     {% endblock %}
-  </div>
+
   
