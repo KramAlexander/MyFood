@@ -91,7 +91,6 @@ block content %}
             </form>
           </div>
         </div>
-
         <div class="form-group">
           <label for="number-input">Duration (minutes)</label><br />
           <input
@@ -129,7 +128,6 @@ block content %}
         class="card-img-top"
         alt="Recipe Image"
       />
-      <!---->
 
       <div class="card-content">
         <h2>Recipe 1</h2>
@@ -149,7 +147,6 @@ block content %}
         class="card-img-top"
         alt="Recipe Image"
       />
-      <!---->
 
       <div class="card-content">
         <h2>Recipe 1</h2>
@@ -169,7 +166,6 @@ block content %}
         class="card-img-top"
         alt="Recipe Image"
       />
-      <!---->
 
       <div class="card-content">
         <h2>Recipe 1</h2>
@@ -189,7 +185,6 @@ block content %}
         class="card-img-top"
         alt="Recipe Image"
       />
-      <!---->
 
       <div class="card-content">
         <h2>Recipe 1</h2>
@@ -209,7 +204,6 @@ block content %}
         class="card-img-top"
         alt="Recipe Image"
       />
-      <!---->
 
       <div class="card-content">
         <h2>Recipe 1</h2>
@@ -229,7 +223,6 @@ block content %}
         class="card-img-top"
         alt="Recipe Image"
       />
-      <!---->
 
       <div class="card-content">
         <h2>Recipe 1</h2>
@@ -249,7 +242,6 @@ block content %}
         class="card-img-top"
         alt="Recipe Image"
       />
-      <!---->
 
       <div class="card-content">
         <h2>Recipe 1</h2>
@@ -359,6 +351,14 @@ block content %}
     const description = document
       .getElementById("description-input")
       .value.trim();
+    const imageInput = document.getElementById("image-input");
+    const image = imageInput.files[0];
+    const filename = image.name;
+
+    let formData = new FormData();
+    formData.append("image", image);
+    fetch("/upload/image", { method: "POST", body: formData });
+
     const duration = document.getElementById("number-input").value.trim();
     const difficulty = document.querySelector(
       ".ratings span[data-clicked='true']"
@@ -373,6 +373,7 @@ block content %}
     if (
       !name ||
       !description ||
+      !filename ||
       !duration ||
       !difficulty ||
       ingredients.length === 0
@@ -384,6 +385,7 @@ block content %}
     const data = {
       name,
       description,
+      filename,
       duration: parseInt(duration, 10),
       ingredients,
       difficulty: parseFloat(difficulty),

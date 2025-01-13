@@ -5,6 +5,8 @@ from waitress import serve
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from sqlalchemy.dialects.postgresql import JSON
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -113,6 +115,22 @@ class Recipe(Resource):
     
 api.add_resource(Recipes, '/api/recipes/')
 api.add_resource(Recipe,'/api/recipes/<int:id>')
+
+@app.route('/upload/image', methods=['POST'])
+def upload_image():
+    if not os.path.exists('uploads'):
+        os.makedirs('uploads')
+
+    if 'image' not in request.files:
+        return jsonify({"error": "No image part in the request"}), 400
+    
+    image = request.files['image']
+    if image.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    image.save(f"static/uploads/{image.filename}")
+    
+    return jsonify({"message": "File uploaded successfully", "filename": image.filename})
 
 @app.route('/')
 @app.route('/index')
