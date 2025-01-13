@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, jsonify
+from flask_migrate import Migrate
+
 from waitress import serve
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
@@ -7,19 +9,21 @@ from sqlalchemy.dialects.postgresql import JSON
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 api = Api(app)
 
 class RecipeModel(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(80),unique=True,nullable=False)
     description = db.Column(db.String(80),unique=False,nullable=False)
+    image_url = db.Column(db.String(255), nullable=True)
     duration = db.Column(db.Integer,nullable=False)
     ingredients = db.Column(JSON, nullable=False, default=list)
     difficulty = db.Column(db.Float,unique=False,nullable=False)
     
 
     def __repr__(self):
-        return f"Recipe(name={self.name}, description={self.description}, duration={self.duration}, ingredients={self.ingredients}, difficulty={self.difficulty})"
+        return f"Recipe(name={self.name}, description={self.description}, image_url={self.image_url}, duration={self.duration}, ingredients={self.ingredients}, difficulty={self.difficulty})"
 
     
     def add_ingredient(self, ingredient):
@@ -38,6 +42,7 @@ recipe_args = reqparse.RequestParser()
 recipe_args.add_argument('name',type=str,required=True,help="Name cannot be blank")
 recipe_args.add_argument('description',type=str,required=True,help="Description cannot be blank")
 recipe_args.add_argument('duration',type=int,required=True,help="Duration cannot be blank")
+recipe_args.add_argument('image_url', type=str,required=False)
 recipe_args.add_argument(
     'ingredients',
     type=str, 
@@ -51,6 +56,7 @@ recipeFields = {
     'id': fields.Integer,
     'name': fields.String,
     'description': fields.String,
+    'image_url': fields.String,
     'duration': fields.Integer,
     'ingredients': fields.List(fields.String),
     'difficulty': fields.Float,
@@ -66,7 +72,7 @@ class Recipes(Resource):
     @marshal_with(recipeFields)
     def post(self):
         args = recipe_args.parse_args()
-        recipe = RecipeModel(name=args["name"], description=args["description"],duration=args["duration"],ingredients=args["ingredients"],difficulty=args["difficulty"],)
+        recipe = RecipeModel(name=args["name"], description=args["description"], image_url=args["image_url"],duration=args["duration"],ingredients=args["ingredients"],difficulty=args["difficulty"],)
         db.session.add(recipe)
         db.session.commit()
         recipes = RecipeModel.query.all()
@@ -88,6 +94,7 @@ class Recipe(Resource):
             abort(404,"Recipe not found")
         recipe.name = args["name"]
         recipe.description = args["description"]
+        recipe.image_url = args["image_url"]
         recipe.duration = args["duration"]
         recipe.ingredients = args["ingredients"]
         recipe.difficulty = args["difficulty"]

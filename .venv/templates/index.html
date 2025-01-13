@@ -1,65 +1,110 @@
 {% extends "base.html" %} {% block title %}Home - My Website{% endblock %} {%
-  block content %}
-  <div class="container-{breakpoint}">
-    <div class="floating-button" onclick="openForm()"">
+block content %}
+<div class="container-{breakpoint}">
+  <div class="floating-button" onclick="openForm()">
     <span class="plus-sign">+</span>
-    </div>
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeForm()">&times;</span>
-        <h2>Create a Recipe</h2>
-        <form>
-          <div class="form-group">
-            <label for="name-input">Name</label><br>
-            <input type="text" class="recipe-inputs" id="name-input" name="name-input" placeholder="Enter recipe name"/>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeForm()">&times;</span>
+      <h2>Create a Recipe</h2>
+      <form>
+        <div class="form-group">
+          <label for="name-input">Name</label><br />
+          <input
+            type="text"
+            class="recipe-inputs"
+            id="name-input"
+            name="name-input"
+            placeholder="Enter recipe name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="description-input">Description</label><br />
+          <input
+            type="text"
+            class="recipe-inputs"
+            id="description-input"
+            name="description-input"
+            placeholder="Enter recipe description"
+          />
+        </div>
+        <div class="form-group">
+          <label for="image-input">Image</label><br />
+          <input
+            type="file"
+            class="recipe-input"
+            id="image-input"
+            name="image-input"
+            accept=".pdf, .jpg, .png, .svg"
+          />
+        </div>
+        <div class="form-group">
+          <label for="ingredients-input">Ingredients</label><br />
+          <div class="ingredients-form">
+            <!-- Ingredients list will appear here -->
+            <button
+              class="ingredients-btn"
+              type="button"
+              onclick="openIngredientsModal()"
+            >
+              +
+            </button>
           </div>
-          <div class="form-group">
-            <label for="description-input">Description</label><br>
-            <input type="text" class="recipe-inputs" id="description-input" name="description-input" placeholder="Enter recipe description"/>
-          </div>
-          <div class="form-group">
-            <label for="image-input">Image</label><br>
-            <input type="file" class="recipe-input" id="image-input" name="image-input" accept=".pdf, .jpg, .png, .svg">
-          </div>
-          <div class="form-group">
-            <label for="ingredients-input">Ingredients</label><br>
-            <div class="ingredients-form">
-              <!-- Ingredients list will appear here -->
-              <button class="ingredients-btn" type="button" onclick="openIngredientsModal()">+</button>
-            </div>
-            
-          </div>
-          
-          <!-- new form for adding ingredients -->
-          <div id="ingredientsModal" class="modal">
-            <div class="modal-content">
-              <span class="close" onclick="closeIngredientsModal()">&times;</span>
-              <h2>Add Ingredient</h2>
-              <form id="ingredientForm">
-                <div class="form-group">
-                  <label for="ingredient-name">Ingredient Name</label>
-                  <input type="text" id="ingredient-name" class="recipe-inputs" placeholder="Enter ingredient name" required />
-                </div>
-                <div class="form-group">
-                  <label for="ingredient-amount">Amount</label>
-                  <input type="text" id="ingredient-amount" class="recipe-inputs" placeholder="Enter amount (e.g., 2 cups)" required />
-                </div>
-                <div class="submit-btn-container">
-                  <button type="button" class="submit-btn" onclick="addIngredient()">Add</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          
+        </div>
 
-          
-          <div class="form-group">
-            <label for="number-input">Duration (minutes)</label><br>
-            <input type="number" class="recipe-inputs" id="number-input" name="number-input" placeholder="Enter duration"/>
+        <!-- new form for adding ingredients -->
+        <div id="ingredientsModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeIngredientsModal()">&times;</span>
+            <h2>Add Ingredient</h2>
+            <form id="ingredientForm">
+              <div class="form-group">
+                <label for="ingredient-name">Ingredient Name</label>
+                <input
+                  type="text"
+                  id="ingredient-name"
+                  class="recipe-inputs"
+                  placeholder="Enter ingredient name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="ingredient-amount">Amount</label>
+                <input
+                  type="text"
+                  id="ingredient-amount"
+                  class="recipe-inputs"
+                  placeholder="Enter amount (e.g., 2 cups)"
+                  required
+                />
+              </div>
+              <div class="submit-btn-container">
+                <button
+                  type="button"
+                  class="submit-btn"
+                  onclick="addIngredient()"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
           </div>
-          <div class="form-group">
-            <label for="difficulty-input">Difficulty</label><br>
-            <div class="ratings-wrapper">
+        </div>
+
+        <div class="form-group">
+          <label for="number-input">Duration (minutes)</label><br />
+          <input
+            type="number"
+            class="recipe-inputs"
+            id="number-input"
+            name="number-input"
+            placeholder="Enter duration"
+          />
+        </div>
+        <div class="form-group">
+          <label for="difficulty-input">Difficulty</label><br />
+          <div class="ratings-wrapper">
             <div class="ratings">
               <span data-rating="5">&#9733;</span>
               <span data-rating="4">&#9733;</span>
@@ -68,256 +113,304 @@
               <span data-rating="1">&#9733;</span>
             </div>
           </div>
-          </div>
-          <div class="submit-btn-container">
-            <button type="submit" class="submit-btn"onclick="submitRecipe()"x>Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-      <div class="card-container">
-
-
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
         </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
+        <div class="submit-btn-container">
+          <button type="submit" class="submit-btn" onclick="submitRecipe()" x>
+            Submit
+          </button>
         </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="{{ url_for('static', filename='cat.jpg') }}" class="card-img-top" alt="Recipe Image" /> <!---->
-
-          <div class="card-content">
-            <h2>Recipe 1</h2>
-            <p class="card-text">This is a description of Recipe 1.<br> Duration: 45min</p>
-            <a href="#" class="button">
-              Find out more 
-              <span class="material-symbols-outlined">
-                arrow_right_alt
-              </span>
-            </a>
-          </div>
-        </div>
-
-        
-        
-        
+      </form>
     </div>
   </div>
-    <script>
-      function openForm() {
-        document.getElementById("myModal").style.display = "flex";
-      }
-      
-      function closeForm() {
-        document.getElementById("myModal").style.display = "none";
-      }
-  
-  
-      const stars = document.querySelectorAll(".ratings span");
-      let ratings = [];
-      
-      for(let star of stars){
-        star.addEventListener("click",function() {
-          stars.forEach((siblingStar) => siblingStar.removeAttribute("data-clicked"));
-          this.setAttribute("data-clicked","true");
-          let rating = this.dataset.rating;
-          let data = { 
-            "stars": rating
-          }
-          ratings.push(data);
-          localStorage.setItem("rating",JSON.stringify(ratings))
-      
-        })
-      }
-      function openIngredientsModal() {
-        const modal = document.getElementById("ingredientsModal");
-        const form = document.getElementById("ingredientForm");
+  <div class="card-container">
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
 
-        if (modal) {
-          modal.style.display = "flex";
-        } else {
-          console.error("Ingredients modal not found.");
-        }
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
+
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
+
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
+
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
+
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
+
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
+
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='cat.jpg') }}"
+        class="card-img-top"
+        alt="Recipe Image"
+      />
+      <!---->
+
+      <div class="card-content">
+        <h2>Recipe 1</h2>
+        <p class="card-text">
+          This is a description of Recipe 1.<br />
+          Duration: 45min
+        </p>
+        <a href="#" class="button">
+          Find out more
+          <span class="material-symbols-outlined"> arrow_right_alt </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function openForm() {
+    document.getElementById("myModal").style.display = "flex";
+  }
+
+  function closeForm() {
+    document.getElementById("myModal").style.display = "none";
+  }
+
+  const stars = document.querySelectorAll(".ratings span");
+  let ratings = [];
+
+  for (let star of stars) {
+    star.addEventListener("click", function () {
+      stars.forEach((siblingStar) =>
+        siblingStar.removeAttribute("data-clicked")
+      );
+      this.setAttribute("data-clicked", "true");
+      let rating = this.dataset.rating;
+      let data = {
+        stars: rating,
+      };
+      ratings.push(data);
+      localStorage.setItem("rating", JSON.stringify(ratings));
+    });
+  }
+  function openIngredientsModal() {
+    const modal = document.getElementById("ingredientsModal");
+    const form = document.getElementById("ingredientForm");
+
+    if (modal) {
+      modal.style.display = "flex";
+    } else {
+      console.error("Ingredients modal not found.");
     }
+  }
 
-      function closeIngredientsModal() {
-          const modal = document.getElementById("ingredientsModal");
+  function closeIngredientsModal() {
+    const modal = document.getElementById("ingredientsModal");
 
-          if (modal) {
-              document.getElementById("ingredient-name").value = '';
-              document.getElementById("ingredient-amount").value = '';
-              modal.style.display = "none";
-      
-          } else {
-              console.error("Ingredients modal not found.");
-      }
+    if (modal) {
+      document.getElementById("ingredient-name").value = "";
+      document.getElementById("ingredient-amount").value = "";
+      modal.style.display = "none";
+    } else {
+      console.error("Ingredients modal not found.");
     }
+  }
 
-
-    function addIngredient() {
+  function addIngredient() {
     console.log("Adding ingredient");
     const name = document.getElementById("ingredient-name").value.trim();
     const amount = document.getElementById("ingredient-amount").value.trim();
 
     if (name && amount) {
-        const ingredientDiv = document.createElement("div");
-        ingredientDiv.className = "ingredient-item";
-        ingredientDiv.innerHTML = `<span>${name} | ${amount}</span>`;
+      const ingredientDiv = document.createElement("div");
+      ingredientDiv.className = "ingredient-item";
+      ingredientDiv.innerHTML = `<span>${name} | ${amount}</span>`;
 
-        const ingredientsForm = document.querySelector(".ingredients-form");
-        const addButton = document.querySelector(".ingredients-btn");
+      const ingredientsForm = document.querySelector(".ingredients-form");
+      const addButton = document.querySelector(".ingredients-btn");
 
-        ingredientsForm.insertBefore(ingredientDiv, addButton);
+      ingredientsForm.insertBefore(ingredientDiv, addButton);
 
-        closeIngredientsModal();
+      closeIngredientsModal();
     } else {
-        alert("Please fill out both fields.");
+      alert("Please fill out both fields.");
     }
-}
-async function submitRecipe() {
+  }
+  async function submitRecipe() {
     const name = document.getElementById("name-input").value.trim();
-    const description = document.getElementById("description-input").value.trim();
+    const description = document
+      .getElementById("description-input")
+      .value.trim();
     const duration = document.getElementById("number-input").value.trim();
-    const difficulty = document.querySelector(".ratings span[data-clicked='true']")?.dataset.rating;
+    const difficulty = document.querySelector(
+      ".ratings span[data-clicked='true']"
+    )?.dataset.rating;
     const ingredients = [];
 
     document.querySelectorAll(".ingredient-item span").forEach((item) => {
-        const [ingredientName, ingredientAmount] = item.textContent.split(" | ");
-        ingredients.push(`${ingredientName.trim()} (${ingredientAmount.trim()})`);
+      const [ingredientName, ingredientAmount] = item.textContent.split(" | ");
+      ingredients.push(`${ingredientName.trim()} (${ingredientAmount.trim()})`);
     });
 
-    if (!name || !description || !duration || !difficulty || ingredients.length === 0) {
-        alert("Please fill out all fields and add at least one ingredient.");
-        return;
+    if (
+      !name ||
+      !description ||
+      !duration ||
+      !difficulty ||
+      ingredients.length === 0
+    ) {
+      alert("Please fill out all fields and add at least one ingredient.");
+      return;
     }
 
     const data = {
-        name,
-        description,
-        duration: parseInt(duration, 10),
-        ingredients,
-        difficulty: parseFloat(difficulty),
+      name,
+      description,
+      duration: parseInt(duration, 10),
+      ingredients,
+      difficulty: parseFloat(difficulty),
     };
 
     try {
-        const response = await fetch("/api/recipes/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
+      const response = await fetch("/api/recipes/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-        const result = await response.json();
-        if (response.ok) {
-            alert("Recipe created successfully!");
-            console.log("New Recipe:", result);
-            location.reload(); 
-        } else {
-            alert("Failed to create recipe. Please try again.");
-            console.error(result);
-        }
+      const result = await response.json();
+      if (response.ok) {
+        alert("Recipe created successfully!");
+        console.log("New Recipe:", result);
+        location.reload();
+      } else {
+        alert("Failed to create recipe. Please try again.");
+        console.error(result);
+      }
     } catch (error) {
-        console.error("Error submitting recipe:", error);
-        alert("An error occurred. Please try again later.");
+      console.error("Error submitting recipe:", error);
+      alert("An error occurred. Please try again later.");
     }
-}
-
-
-    </script>
-    {% endblock %}
-
-  
+  }
+</script>
+{% endblock %}
