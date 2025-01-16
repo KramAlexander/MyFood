@@ -4,25 +4,35 @@ body {
   overscroll-behavior: none;
 }
 .gradient-background {
-  background: rgb(19, 18, 18);
-  background: linear-gradient(
-    180deg,
-    rgba(19, 18, 18, 1) 0%,
-    rgba(61, 79, 93, 1) 23%,
-    rgba(105, 109, 110, 1) 63%,
-    rgba(255, 255, 255, 1) 99%
-  );
+  background: radial-gradient(
+      circle at center,
+      rgba(19, 18, 18, 1) 20%,
+      rgba(40, 40, 40, 1) 60%,
+      rgba(80, 80, 80, 1) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(19, 18, 18, 1) 0%,
+      rgba(40, 40, 40, 1) 33%,
+      rgba(80, 80, 80, 1) 66%,
+      rgba(120, 120, 120, 1) 100%
+    );
+  background-blend-mode: overlay;
   padding: 20px;
-
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
 }
 html {
   height: 100%;
+}
+.content {
+  margin-top: 80px;
 }
 /* #####################################################################*/
 .navbar-title {
   font-size: 20px;
   font-weight: bold;
+  margin-left: 1%;
 }
 nav {
   position: fixed;
@@ -107,9 +117,7 @@ nav .right-section {
     url("data:image/svg+xml, %3Csvg%20xmlns=%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox=%270%200%2015.17%2014.81%27%20width=%2715.17%27%20height=%2714.81%27%3E%3Cpath%20d=%27M6,.67A5.34,5.34,0,1,1,.67,6,5.33,5.33,0,0,1,6,.67ZM9.86,9.58l4.85,4.75Z%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-width=%271.33%27%2F%3E%3C%2Fsvg%3E");
 }
 /* #####################################################################*/
-.content {
-  margin-top: 80px;
-}
+
 /* Recipes */
 .floating-button {
   position: fixed;
@@ -310,114 +318,107 @@ label {
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  justify-content: flex-start;
+  justify-content: space-around;
+  gap: 30px;
   margin: 0 auto;
-  padding: 0 0 0 8px;
+  padding: 0 40px;
+  max-width: 1200px;
   box-sizing: border-box;
 }
 
 .card {
   position: relative;
-  flex: 1 1 22%;
-  max-width: 22%;
+  flex: 1 1 calc(25% - 30px);
+  max-width: calc(25% - 30px);
   background-color: #daddd8;
-  box-sizing: border-box;
   height: 300px;
   overflow: hidden;
   color: white;
   text-shadow: 0 0 10px black, 0 0 20px black, 0 0 30px black;
-
-  img {
-    position: absolute;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0.9;
-    transition: opacity 0.2s ease-out;
-  }
-
-  h2 {
-    position: absolute;
-    inset: auto auto 30px 30px;
-    margin: 0;
-    transition: inset 0.3s 0.3s ease-out;
-    font-family: "Lato", sans-serif;
-    font-weight: normal;
-    text-transform: uppercase;
-    color: white;
-  }
-
-  p,
-  a {
-    position: absolute;
-    opacity: 0;
-    max-width: 80%;
-    transition: opacity 0.3s ease-out;
-  }
-
-  p {
-    inset: auto auto 80px 30px;
-  }
-
-  a {
-    inset: auto auto 40px 30px;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  &:hover h2 {
-    inset: auto auto 220px 30px;
-    transition: inset 0.3s ease-out;
-  }
-
-  &:hover p,
-  &:hover a {
-    opacity: 1;
-    transition: opacity 0.5s 0.1s ease-in;
-  }
-
-  &:hover img {
-    transition: opacity 0.3s ease-in;
-    opacity: 1;
-  }
+  box-sizing: border-box;
+  z-index: 100;
+}
+.card img {
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  transition: opacity 0.2s ease-out;
 }
 
-.material-symbols-outlined {
-  vertical-align: middle;
+.card h2 {
+  position: absolute;
+  inset: auto auto 30px 30px;
+  margin: 0;
+  transition: inset 0.3s 0.3s ease-out;
+  font-family: "Lato", sans-serif;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: white;
+}
+
+.card p,
+.card a {
+  position: absolute;
+  opacity: 0;
+  max-width: 80%;
+  transition: opacity 0.3s ease-out;
+}
+
+.card p {
+  inset: auto auto 80px 30px;
+}
+
+.card a {
+  inset: auto auto 40px 30px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card:hover h2 {
+  inset: auto auto 220px 30px;
+  transition: inset 0.3s ease-out;
+}
+
+.card:hover p,
+.card:hover a {
+  opacity: 1;
+  transition: opacity 0.5s 0.1s ease-in;
+}
+
+.card:hover img {
+  transition: opacity 0.3s ease-in;
+  opacity: 1;
 }
 
 @media (min-width: 1200px) {
   .card {
-    flex: 1 1 calc(20% - 16px);
-    max-width: calc(20% - 16px);
-    height: 300px;
+    flex: 1 1 calc(25% - 30px);
+    max-width: calc(25% - 30px);
   }
 }
 
 @media (max-width: 1199px) and (min-width: 992px) {
   .card {
-    flex: 1 1 calc(25% - 16px);
-    max-width: calc(25% - 16px);
-    height: 300px;
+    flex: 1 1 calc(33.33% - 30px);
+    max-width: calc(33.33% - 30px);
   }
 }
 
 @media (max-width: 991px) {
   .card {
-    flex: 1 1 calc(33.33% - 16px);
-    max-width: calc(33.33% - 16px);
-    height: 300px;
+    flex: 1 1 calc(50% - 30px);
+    max-width: calc(50% - 30px);
   }
 }
 
 @media (max-width: 767px) {
   .card {
-    flex: 1 1 calc(50% - 16px);
-    max-width: calc(50% - 16px);
-    height: 300px;
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }
 
@@ -425,8 +426,60 @@ label {
   .card {
     flex: 1 1 100%;
     max-width: 100%;
-    height: 300px;
   }
 }
 
+.black-bar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.4)),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(50, 50, 50, 0.3));
+  background-blend-mode: multiply;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.black-bar.left {
+  left: 0;
+  border-right: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.black-bar.right {
+  right: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+.black-bar {
+  animation: gradientMove 5s infinite alternate;
+}
+
+@keyframes borderGlow {
+  0% {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.black-bar.left,
+.black-bar.right {
+  animation: borderGlow 3s infinite alternate;
+}
 /* #####################################################################*/
