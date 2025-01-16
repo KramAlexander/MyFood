@@ -337,6 +337,18 @@ label {
   text-shadow: 0 0 10px black, 0 0 20px black, 0 0 30px black;
   box-sizing: border-box;
   z-index: 100;
+  opacity: 0;
+  transform: translateY(100px); /* Start below the viewport */
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+.card.fly-in {
+  opacity: 1;
+  transform: translateY(0); /* Moves to the default position */
+}
+
+.card.fly-out {
+  opacity: 0;
+  transform: translateY(-100px); /* Moves above the viewport */
 }
 .card img {
   position: absolute;

@@ -148,6 +148,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.5,
+  };
+
+  const observerCallback = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fly-in");
+        entry.target.classList.remove("fly-out");
+      } else {
+        entry.target.classList.add("fly-out");
+        entry.target.classList.remove("fly-in");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(observerCallback, observerOptions);
   function addRecipeCard(recipe) {
     const cardContainer = document.querySelector(".card-container");
 
@@ -173,6 +192,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     `;
 
     cardContainer.appendChild(card);
+
+    // Observe the new card for intersection changes
+    observer.observe(card);
   }
 
   await loadRecipes();
@@ -191,4 +213,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Received new recipe:", recipeData);
     addRecipeCard(recipeData);
   });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".card");
+  const visibilityMap = new Map();
+  const debounceMap = new Map();
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.5,
+  };
+
+  const observerCallback = (entries) => {
+    entries.forEach((entry) => {
+      const isCurrentlyVisible = visibilityMap.get(entry.target) || false;
+
+      if (debounceMap.has(entry.target)) {
+        clearTimeout(debounceMap.get(entry.target));
+      }
+
+      const debounceTimeout = setTimeout(() => {
+        if (entry.isIntersecting && !isCurrentlyVisible) {
+          entry.target.classList.add("fly-in");
+          entry.target.classList.remove("fly-out");
+          visibilityMap.set(entry.target, true);
+        } else if (!entry.isIntersecting && isCurrentlyVisible) {
+          entry.target.classList.add("fly-out");
+          entry.target.classList.remove("fly-in");
+          visibilityMap.set(entry.target, false);
+        }
+      }, 150);
+
+      debounceMap.set(entry.target, debounceTimeout);
+    });
+  };
+
+  const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+  cards.forEach((card) => observer.observe(card));
 });
