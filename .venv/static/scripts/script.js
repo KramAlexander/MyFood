@@ -254,3 +254,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => observer.observe(card));
 });
+function displaySelectedImage(input) {
+  const container = document.getElementById("selected-image-container");
+  if (input.files && input.files[0]) {
+    const fileName = input.files[0].name;
+
+    container.innerHTML = `
+      <span>${fileName}</span>
+      <button type="button" class="remove-btn" onclick="removeSelectedImage()">Remove</button>
+    `;
+  }
+}
+
+function removeSelectedImage() {
+  const container = document.getElementById("selected-image-container");
+  const input = document.getElementById("image-input");
+
+  input.value = ""; // Clear the input
+  container.innerHTML = ""; // Clear the display
+}

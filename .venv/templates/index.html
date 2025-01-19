@@ -9,41 +9,54 @@ block content %}
     <div class="modal-content">
       <span class="close" onclick="closeForm()">&times;</span>
       <h2>Create a Recipe</h2>
-      <form>
+
+        <!-- Recipe Name -->
         <div class="form-group">
-          <label for="name-input">Name</label><br />
+          <label for="name-input">Name</label>
           <input
             type="text"
             class="recipe-inputs"
             id="name-input"
-            name="name-input"
+            name="recipe_name"
             placeholder="Enter recipe name"
+            required
           />
         </div>
+  
+        <!-- Recipe Description -->
         <div class="form-group">
-          <label for="description-input">Description</label><br />
+          <label for="description-input">Description</label>
           <input
             type="text"
             class="recipe-inputs"
             id="description-input"
-            name="description-input"
+            name="recipe_description"
             placeholder="Enter recipe description"
+            required
           />
         </div>
+  
+        <!-- Image Input -->
         <div class="form-group">
-          <label for="image-input">Image</label><br />
+          <label for="image-input">Image</label>
+          <label for="image-input" class="image-btn">Select Image</label>
           <input
             type="file"
-            class="recipe-input"
+            class="recipe-inputs hidden"
             id="image-input"
-            name="image-input"
-            accept=".pdf, .jpg, .png, .svg"
+            name="recipe_image"
+            accept=".jpg, .png, .jpeg"
+            onchange="displaySelectedImage(this)"
           />
+          <div id="selected-image-container" class="selected-image-container">
+            <!-- Dynamically updated with JavaScript -->
+          </div>
         </div>
+  
+        <!-- Ingredients -->
         <div class="form-group">
-          <label for="ingredients-input">Ingredients</label><br />
+          <label for="ingredients-input">Ingredients</label>
           <div class="ingredients-form">
-            <!-- Ingredients list will appear here -->
             <button
               class="ingredients-btn"
               type="button"
@@ -53,57 +66,23 @@ block content %}
             </button>
           </div>
         </div>
-
-        <!-- new form for adding ingredients -->
-        <div id="ingredientsModal" class="modal">
-          <div class="modal-content">
-            <span class="close" onclick="closeIngredientsModal()">&times;</span>
-            <h2>Add Ingredient</h2>
-            <form id="ingredientForm">
-              <div class="form-group">
-                <label for="ingredient-name">Ingredient Name</label>
-                <input
-                  type="text"
-                  id="ingredient-name"
-                  class="recipe-inputs"
-                  placeholder="Enter ingredient name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="ingredient-amount">Amount</label>
-                <input
-                  type="text"
-                  id="ingredient-amount"
-                  class="recipe-inputs"
-                  placeholder="Enter amount (e.g., 2 cups)"
-                  required
-                />
-              </div>
-              <div class="submit-btn-container">
-                <button
-                  type="button"
-                  class="submit-btn"
-                  onclick="addIngredient()"
-                >
-                  Add
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+  
+        <!-- Duration -->
         <div class="form-group">
-          <label for="number-input">Duration (minutes)</label><br />
+          <label for="number-input">Duration (minutes)</label>
           <input
             type="number"
             class="recipe-inputs"
             id="number-input"
-            name="number-input"
+            name="recipe_duration"
             placeholder="Enter duration"
+            required
           />
         </div>
+  
+        <!-- Difficulty -->
         <div class="form-group">
-          <label for="difficulty-input">Difficulty</label><br />
+          <label for="difficulty-input">Difficulty</label>
           <div class="ratings-wrapper">
             <div class="ratings">
               <span data-rating="5">&#9733;</span>
@@ -114,6 +93,8 @@ block content %}
             </div>
           </div>
         </div>
+  
+        <!-- Submit Button -->
         <div class="submit-btn-container">
           <button
             type="submit"
@@ -123,9 +104,55 @@ block content %}
             Submit
           </button>
         </div>
+
+    </div>
+  </div>
+  
+  <!-- Ingredient Modal -->
+  <div id="ingredientsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeIngredientsModal()">&times;</span>
+      <h2>Add Ingredient</h2>
+      <form id="ingredientForm">
+        <!-- Ingredient Name -->
+        <div class="form-group">
+          <label for="ingredient-name">Ingredient Name</label>
+          <input
+            type="text"
+            id="ingredient-name"
+            class="recipe-inputs"
+            placeholder="Enter ingredient name"
+            required
+          />
+        </div>
+  
+        <!-- Ingredient Amount -->
+        <div class="form-group">
+          <label for="ingredient-amount">Amount</label>
+          <input
+            type="text"
+            id="ingredient-amount"
+            class="recipe-inputs"
+            placeholder="Enter amount (e.g., 2 cups)"
+            required
+          />
+        </div>
+  
+        <!-- Add Ingredient Button -->
+        <div class="submit-btn-container">
+          <button
+            type="button"
+            class="submit-btn"
+            onclick="addIngredient()"
+          >
+            Add
+          </button>
+        </div>
       </form>
     </div>
   </div>
+  
+
   <div class="black-bar left"></div>
 
   <div class="card-container">
