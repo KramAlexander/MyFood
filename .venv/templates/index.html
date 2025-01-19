@@ -5,110 +5,105 @@ block content %}
   <div class="floating-button" onclick="openForm()">
     <span class="plus-sign">+</span>
   </div>
+  
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeForm()">&times;</span>
       <h2>Create a Recipe</h2>
-
-        <!-- Recipe Name -->
-        <div class="form-group">
-          <label for="name-input">Name</label>
-          <input
-            type="text"
-            class="recipe-inputs"
-            id="name-input"
-            name="recipe_name"
-            placeholder="Enter recipe name"
-            required
+      
+      <!-- Recipe Name -->
+      <div class="form-group">
+        <label for="name-input">Name</label>
+        <input
+          type="text"
+          class="recipe-inputs"
+          id="name-input"
+          name="recipe_name"
+          placeholder="Enter recipe name"
+          required
+        />
+      </div>
+      
+      <!-- Recipe Description -->
+      <div class="form-group">
+        <label for="description-input">Description</label>
+        <input
+          type="text"
+          class="recipe-inputs"
+          id="description-input"
+          name="recipe_description"
+          placeholder="Enter recipe description"
+          required
+        />
+      </div>
+      
+      <!-- Image Input -->
+      <div class="form-group">
+        <label for="image-input">Image</label>
+        <div class="image-row">
+        <label for="image-input" class="image-btn">Select Image</label>
+        <input
+          type="file"
+          class="recipe-inputs hidden"
+          id="image-input"
+          name="recipe_image"
+          accept=".jpg, .png, .jpeg"
+          onchange="previewImage(this)"
           />
+        <div id="image-preview-container" class="image-preview-container">
+          <!-- Preview of the selected image will be displayed here -->
         </div>
-  
-        <!-- Recipe Description -->
-        <div class="form-group">
-          <label for="description-input">Description</label>
-          <input
-            type="text"
-            class="recipe-inputs"
-            id="description-input"
-            name="recipe_description"
-            placeholder="Enter recipe description"
-            required
-          />
+        </div>      </div>
+      
+      <!-- Ingredients -->
+      <div class="form-group">
+        <label>Ingredients</label>
+        <div class="recipe-inputs" id="ingredients-container">
+          <p class="placeholder-text"></p>
         </div>
-  
-        <!-- Image Input -->
-        <div class="form-group">
-          <label for="image-input">Image</label>
-          <label for="image-input" class="image-btn">Select Image</label>
-          <input
-            type="file"
-            class="recipe-inputs hidden"
-            id="image-input"
-            name="recipe_image"
-            accept=".jpg, .png, .jpeg"
-            onchange="displaySelectedImage(this)"
-          />
-          <div id="selected-image-container" class="selected-image-container">
-            <!-- Dynamically updated with JavaScript -->
-          </div>
-        </div>
-  
-        <!-- Ingredients -->
-        <div class="form-group">
-          <label for="ingredients-input">Ingredients</label>
-          <div class="ingredients-form">
-            <button
-              class="ingredients-btn"
-              type="button"
-              onclick="openIngredientsModal()"
-            >
-              +
-            </button>
-          </div>
-        </div>
-  
-        <!-- Duration -->
-        <div class="form-group">
-          <label for="number-input">Duration (minutes)</label>
-          <input
-            type="number"
-            class="recipe-inputs"
-            id="number-input"
-            name="recipe_duration"
-            placeholder="Enter duration"
-            required
-          />
-        </div>
-  
-        <!-- Difficulty -->
-        <div class="form-group">
-          <label for="difficulty-input">Difficulty</label>
-          <div class="ratings-wrapper">
-            <div class="ratings">
-              <span data-rating="5">&#9733;</span>
-              <span data-rating="4">&#9733;</span>
-              <span data-rating="3">&#9733;</span>
-              <span data-rating="2">&#9733;</span>
-              <span data-rating="1">&#9733;</span>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Submit Button -->
-        <div class="submit-btn-container">
-          <button
-            type="submit"
-            class="submit-btn"
-            onclick="submitRecipe();return false;"
-          >
-            Submit
+        <div class="ingredients-btn-container">
+          <button class="ingredients-btn" type="button" onclick="openIngredientsModal()">Add Ingredient
           </button>
         </div>
-
+      </div>
+      
+      <!-- Duration -->
+      <div class="form-group">
+        <label for="number-input">Duration (minutes)</label>
+        <input
+          type="number"
+          class="recipe-inputs"
+          id="number-input"
+          name="recipe_duration"
+          placeholder="Enter duration"
+          required
+        />
+      </div>
+      
+      <!-- Difficulty -->
+      <div class="form-group">
+        <label>Difficulty</label>
+        <div class="ratings-wrapper">
+          <div class="ratings">
+            <span data-rating="5">&#9733;</span>
+            <span data-rating="4">&#9733;</span>
+            <span data-rating="3">&#9733;</span>
+            <span data-rating="2">&#9733;</span>
+            <span data-rating="1">&#9733;</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn" onclick="submitRecipe(); return false;">
+        Submit Recipe
+      </button>
     </div>
+    
   </div>
   
-  <!-- Ingredient Modal -->
+  
+  <!-- Add Ingredient Modal -->
   <div id="ingredientsModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeIngredientsModal()">&times;</span>
@@ -140,17 +135,14 @@ block content %}
   
         <!-- Add Ingredient Button -->
         <div class="submit-btn-container">
-          <button
-            type="button"
-            class="submit-btn"
-            onclick="addIngredient()"
-          >
-            Add
+          <button type="button" class="submit-btn" onclick="addIngredient()">
+            Add Ingredient
           </button>
         </div>
       </form>
     </div>
   </div>
+  
   
 
   <div class="black-bar left"></div>

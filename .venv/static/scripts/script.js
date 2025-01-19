@@ -50,20 +50,64 @@ function addIngredient() {
   const amount = document.getElementById("ingredient-amount").value.trim();
 
   if (name && amount) {
+    // Create a new ingredient item
     const ingredientDiv = document.createElement("div");
     ingredientDiv.className = "ingredient-item";
-    ingredientDiv.innerHTML = `<span>${name} | ${amount}</span>`;
 
-    const ingredientsForm = document.querySelector(".ingredients-form");
-    const addButton = document.querySelector(".ingredients-btn");
+    // Add ingredient details and a remove button
+    ingredientDiv.innerHTML = `
+      <span>- ${name} | ${amount}</span>
+      <button type="button" class="remove-btn" onclick="removeIngredient(this)">-</button>
 
-    ingredientsForm.insertBefore(ingredientDiv, addButton);
+    `;
 
+    // Find the correct container to add ingredients
+    const ingredientsContainer = document.querySelector(
+      "#ingredients-container"
+    );
+    if (ingredientsContainer) {
+      const placeholderText =
+        ingredientsContainer.querySelector(".placeholder-text");
+
+      // Remove placeholder if present
+      if (placeholderText) {
+        placeholderText.remove();
+      }
+
+      // Add the new ingredient to the container
+      ingredientsContainer.appendChild(ingredientDiv);
+    } else {
+      console.error("Ingredients container not found.");
+    }
+
+    // Clear input fields and close modal
     closeIngredientsModal();
   } else {
     alert("Please fill out both fields.");
   }
 }
+
+// Function to remove an ingredient
+function removeIngredient(button) {
+  const ingredientDiv = button.parentElement;
+  if (ingredientDiv) {
+    ingredientDiv.remove();
+
+    // Check if the container is now empty and add a placeholder if needed
+    const ingredientsContainer = document.querySelector(
+      "#ingredients-container"
+    );
+    if (ingredientsContainer && ingredientsContainer.children.length === 0) {
+      const placeholderText = document.createElement("p");
+      placeholderText.className = "placeholder-text";
+      placeholderText.textContent = "No ingredients added yet.";
+      ingredientsContainer.appendChild(placeholderText);
+    }
+  } else {
+    console.error("Ingredient item not found.");
+  }
+}
+
 async function submitRecipe() {
   const name = document.getElementById("name-input").value.trim();
   const description = document.getElementById("description-input").value.trim();
@@ -254,22 +298,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => observer.observe(card));
 });
-function displaySelectedImage(input) {
-  const container = document.getElementById("selected-image-container");
-  if (input.files && input.files[0]) {
-    const fileName = input.files[0].name;
+function previewImage(input) {
+  const container = document.getElementById("image-preview-container");
+  container.innerHTML = ""; // Clear any existing preview
 
-    container.innerHTML = `
-      <span>${fileName}</span>
-      <button type="button" class="remove-btn" onclick="removeSelectedImage()">Remove</button>
-    `;
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    // Load the image and create an <img> element
+    reader.onload = function (e) {
+      const img = document.createElement("img");
+      img.src = e.target.result; // Set the image source to the file content
+      img.alt = file.name;
+
+      // Create a remove button
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.className = "remove-btn";
+      removeBtn.onclick = function () {
+        removePreview(input);
+      };
+
+      // Add the image and the button to the container
+      container.appendChild(img);
+      container.appendChild(removeBtn);
+    };
+
+    reader.readAsDataURL(file); // Read the file
   }
 }
 
-function removeSelectedImage() {
-  const container = document.getElementById("selected-image-container");
-  const input = document.getElementById("image-input");
-
-  input.value = ""; // Clear the input
-  container.innerHTML = ""; // Clear the display
+function removePreview(input) {
+  const container = document.getElementById("image-preview-container");
+  input.value = ""; // Clear the input value
+  container.innerHTML = ""; // Clear the preview content
 }
