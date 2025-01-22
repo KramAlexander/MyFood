@@ -194,18 +194,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const observerOptions = {
     root: null,
-    rootMargin: "0px",
-    threshold: 0.5,
+    rootMargin: "100px 0px -50px 0px", // Extend the top boundary for earlier appearance
+    threshold: [0, 0.5], // Trigger on fully invisible (0) and partially visible (0.5)
   };
 
   const observerCallback = (entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("fly-in");
-        entry.target.classList.remove("fly-out");
-      } else {
-        entry.target.classList.add("fly-out");
-        entry.target.classList.remove("fly-in");
+      const card = entry.target;
+
+      if (entry.intersectionRatio >= 0.5) {
+        // Slide in when at least 50% visible
+        card.classList.add("slide-in");
+        card.classList.remove("slide-out");
+      } else if (entry.intersectionRatio === 0) {
+        // Reset animation when completely out of view
+        card.classList.remove("slide-in");
+        card.classList.add("slide-out");
       }
     });
   };
@@ -237,7 +241,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     cardContainer.appendChild(card);
 
-    // Observe the new card for intersection changes
     observer.observe(card);
   }
 
@@ -259,60 +262,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const cards = document.querySelectorAll(".card");
-  const visibilityMap = new Map();
-  const debounceMap = new Map();
-
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.5,
-  };
-
-  const observerCallback = (entries) => {
-    entries.forEach((entry) => {
-      const isCurrentlyVisible = visibilityMap.get(entry.target) || false;
-
-      if (debounceMap.has(entry.target)) {
-        clearTimeout(debounceMap.get(entry.target));
-      }
-
-      const debounceTimeout = setTimeout(() => {
-        if (entry.isIntersecting && !isCurrentlyVisible) {
-          entry.target.classList.add("fly-in");
-          entry.target.classList.remove("fly-out");
-          visibilityMap.set(entry.target, true);
-        } else if (!entry.isIntersecting && isCurrentlyVisible) {
-          entry.target.classList.add("fly-out");
-          entry.target.classList.remove("fly-in");
-          visibilityMap.set(entry.target, false);
-        }
-      }, 150);
-
-      debounceMap.set(entry.target, debounceTimeout);
-    });
-  };
-
-  const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-  cards.forEach((card) => observer.observe(card));
-});
 function previewImage(input) {
   const container = document.getElementById("image-preview-container");
-  container.innerHTML = ""; // Clear any existing preview
+  container.innerHTML = "";
 
   if (input.files && input.files[0]) {
     const file = input.files[0];
     const reader = new FileReader();
 
-    // Load the image and create an <img> element
     reader.onload = function (e) {
       const img = document.createElement("img");
-      img.src = e.target.result; // Set the image source to the file content
+      img.src = e.target.result;
       img.alt = file.name;
 
-      // Create a remove button
       const removeBtn = document.createElement("button");
       removeBtn.textContent = "Remove";
       removeBtn.className = "remove-btn";
@@ -320,17 +282,45 @@ function previewImage(input) {
         removePreview(input);
       };
 
-      // Add the image and the button to the container
       container.appendChild(img);
       container.appendChild(removeBtn);
     };
 
-    reader.readAsDataURL(file); // Read the file
+    reader.readAsDataURL(file);
   }
 }
 
 function removePreview(input) {
   const container = document.getElementById("image-preview-container");
-  input.value = ""; // Clear the input value
-  container.innerHTML = ""; // Clear the preview content
+  input.value = "";
+  container.innerHTML = "";
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".card");
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "100px 0px 0px 0px", // Extend the top boundary for earlier appearance
+    threshold: [0, 0.5], // Trigger on fully invisible (0) and partially visible (0.5)
+  };
+
+  const observerCallback = (entries) => {
+    entries.forEach((entry) => {
+      const card = entry.target;
+
+      if (entry.intersectionRatio >= 0.5) {
+        // Slide in when at least 50% visible
+        card.classList.add("slide-in");
+        card.classList.remove("slide-out");
+      } else if (entry.intersectionRatio === 0) {
+        // Reset animation when completely out of view
+        card.classList.remove("slide-in");
+        card.classList.add("slide-out");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+  cards.forEach((card) => observer.observe(card));
+});
