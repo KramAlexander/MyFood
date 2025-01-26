@@ -3,7 +3,7 @@ function openForm() {
 }
 
 function closeForm() {
-  document.getElementById("myModal").style.display = "none";
+  document.querySelector(".formDiv").style.display = "none";
 }
 
 const stars = document.querySelectorAll(".ratings span");

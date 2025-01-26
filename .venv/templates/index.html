@@ -194,21 +194,94 @@ block content %}
           <button class="prev-btn" onclick="prevStep()">Back</button>
           <button class="next-btn" onclick="nextStep()">Next</button>
         </div>
-  
-        <!-- Add more steps as needed -->
-  
-        <!-- Final Step -->
         <div class="form-step">
-          <h3>Review & Submit</h3>
+          <label for="number-input">Duration (minutes)</label>
+          <input
+            type="number"
+            class="recipe-inputs"
+            id="number-input"
+            name="recipe_duration"
+            placeholder="Enter duration"
+            required
+          />
           <button class="prev-btn" onclick="prevStep()">Back</button>
-          <button type="submit" class="submit-btn" onclick="submitRecipe(); return false;">
-            Submit Recipe
-          </button>
+          <button class="next-btn" onclick="nextStep()">Next</button>
         </div>
+        <div class="form-step">
+          <label>Difficulty</label>
+          <div class="ratings-wrapper">
+            <div class="ratings">
+              <span data-rating="5">&#9733;</span>
+              <span data-rating="4">&#9733;</span>
+              <span data-rating="3">&#9733;</span>
+              <span data-rating="2">&#9733;</span>
+              <span data-rating="1">&#9733;</span>
+            </div>
+          </div>
+          <button class="prev-btn" onclick="prevStep()">Back</button>
+          <button class="next-btn" onclick="nextStep()">Next</button>
+        </div>
+        <!-- Add more steps as needed -->
+        <div class="form-step">
+          <label>Ingredients</label>
+          <div class="recipe-inputs" id="ingredients-container">
+            <p class="placeholder-text"></p>
+          </div>
+          <div class="ingredients-btn-container">
+            <button class="ingredients-btn" type="button" onclick="openIngredientsModal()">Add Ingredient
+            </button>
+          </div>
+          <button class="prev-btn" onclick="prevStep()">Back</button>
+          <button class="next-btn" onclick="nextStep()">Next</button>
+        </div>
+        <div id="ingredientsModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeIngredientsModal()">&times;</span>
+            <h2>Add Ingredient</h2>
+            <form id="ingredientForm">
+             
+              <div class="form-group">
+                <label for="ingredient-name">Ingredient Name</label>
+                <input
+                  type="text"
+                  id="ingredient-name"
+                  class="recipe-inputs"
+                  placeholder="Enter ingredient name"
+                  required
+                />
+              </div>
+        
+         
+              <div class="form-group">
+                <label for="ingredient-amount">Amount</label>
+                <input
+                  type="text"
+                  id="ingredient-amount"
+                  class="recipe-inputs"
+                  placeholder="Enter amount (e.g., 2 cups)"
+                  required
+                />
+              </div>
+        
+              <div class="submit-btn-container">
+                <button type="button" class="submit-btn" onclick="addIngredient()">
+                  Add Ingredient
+                </button>
+              </div>
+            </form>
+          </div>
+        <!-- Final Step -->
+      </div>
+      <div class="form-step">
+        <h3>Review & Submit</h3>
+        <button class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="submit" class="submit-btn" onclick="submitRecipe()">
+          Submit Recipe
+        </button>
       </div>
     </div>
   </div>
-  
+  </div>
  
  
 
