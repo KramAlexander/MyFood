@@ -1,5 +1,5 @@
 function openForm() {
-  document.getElementById("myModal").style.display = "flex";
+  document.querySelector(".formDiv").style.display = "flex";
 }
 
 function closeForm() {
@@ -324,3 +324,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => observer.observe(card));
 });
+let currentStep = 0; // Tracks the current step
+const steps = document.querySelectorAll(".form-step");
+const progress = document.getElementById("progress");
+
+function showStep() {
+  // Hide all steps
+  steps.forEach((step, index) => {
+    step.classList.remove("active");
+    if (index === currentStep) {
+      step.classList.add("active");
+    }
+  });
+
+  // Update the progress bar
+  progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
+}
+
+function nextStep() {
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    showStep();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    showStep();
+  }
+}
+
+// Initialize the first step
+showStep();
