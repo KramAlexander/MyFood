@@ -324,14 +324,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => observer.observe(card));
 });
-let currentStep = 0; // Tracks the current step
+let currentStep = 0; 
 const steps = document.querySelectorAll(".form-step");
 const progress = document.getElementById("progress");
+const formLabel = document.getElementById("form-label");
 
+const stepLabels = [
+  "Name",
+  "Description",
+  "Image",
+  "Duration (minutes)",
+  "Difficulty",
+  "Ingredients",
+  "Review & Submit",
+];
+
+function updateLabel() {
+  formLabel.innerText = stepLabels[currentStep];
+}
 function showStep() {
-  // Hide all steps
   steps.forEach((step, index) => {
-    step.classList.remove("active");
+    step.classList.toggle("active", index === currentStep);
+
     if (index === currentStep) {
       step.classList.add("active");
     }
@@ -339,6 +353,8 @@ function showStep() {
 
   // Update the progress bar
   progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
+
+  updateLabel();
 }
 
 function nextStep() {

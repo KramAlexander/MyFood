@@ -132,15 +132,16 @@ nav .right-section {
   padding: 20px;
   z-index: 1001;
 }
-label {
-  display: block;
-  font-size: 15px;
-  color: rgba(200, 200, 200, 1);
-  margin-bottom: 8px;
+.form-labels {
+  text-align: center;
+  font-size: 24px;
+  color: white;
   font-family: "Lato", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.6px;
+  margin-bottom: 10px;
 }
+
 .recipe-inputs {
   width: 100%;
   padding: 14px;
