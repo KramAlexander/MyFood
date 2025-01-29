@@ -1,9 +1,9 @@
 function openForm() {
-  document.getElementById("myModal").style.display = "flex";
+  document.querySelector(".formDiv").style.display = "flex";
 }
 
 function closeForm() {
-  document.getElementById("myModal").style.display = "none";
+  document.querySelector(".formDiv").style.display = "none";
 }
 
 const stars = document.querySelectorAll(".ratings span");
@@ -324,3 +324,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => observer.observe(card));
 });
+let currentStep = 0; 
+const steps = document.querySelectorAll(".form-step");
+const progress = document.getElementById("progress");
+const formLabel = document.getElementById("form-label");
+
+const stepLabels = [
+  "Name",
+  "Description",
+  "Image",
+  "Duration (minutes)",
+  "Difficulty",
+  "Ingredients",
+  "Review & Submit",
+];
+
+function updateLabel() {
+  formLabel.innerText = stepLabels[currentStep];
+}
+function showStep() {
+  steps.forEach((step, index) => {
+    step.classList.toggle("active", index === currentStep);
+
+    if (index === currentStep) {
+      step.classList.add("active");
+    }
+  });
+
+  // Update the progress bar
+  progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
+
+  updateLabel();
+}
+
+function nextStep() {
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    showStep();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    showStep();
+  }
+}
+
+// Initialize the first step
+showStep();

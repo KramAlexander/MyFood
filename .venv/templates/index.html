@@ -6,12 +6,11 @@ block content %}
     <span class="plus-sign">+</span>
   </div>
   
-  <div id="myModal" class="modal">
+  <!-- <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeForm()">&times;</span>
       <h2>Create a Recipe</h2>
       
-      <!-- Recipe Name -->
       <div class="form-group">
         <label for="name-input">Name</label>
         <input
@@ -24,7 +23,6 @@ block content %}
         />
       </div>
       
-      <!-- Recipe Description -->
       <div class="form-group">
         <label for="description-input">Description</label>
         <input
@@ -36,8 +34,7 @@ block content %}
           required
         />
       </div>
-      
-      <!-- Image Input -->
+
       <div class="form-group">
         <label for="image-input">Image</label>
         <div class="image-row">
@@ -51,11 +48,11 @@ block content %}
           onchange="previewImage(this)"
           />
         <div id="image-preview-container" class="image-preview-container">
-          <!-- Preview of the selected image will be displayed here -->
+       
         </div>
         </div>      </div>
       
-      <!-- Ingredients -->
+     
       <div class="form-group">
         <label>Ingredients</label>
         <div class="recipe-inputs" id="ingredients-container">
@@ -67,7 +64,7 @@ block content %}
         </div>
       </div>
       
-      <!-- Duration -->
+
       <div class="form-group">
         <label for="number-input">Duration (minutes)</label>
         <input
@@ -80,7 +77,7 @@ block content %}
         />
       </div>
       
-      <!-- Difficulty -->
+  
       <div class="form-group">
         <label>Difficulty</label>
         <div class="ratings-wrapper">
@@ -94,7 +91,7 @@ block content %}
         </div>
       </div>
       
-      <!-- Submit Button -->
+     
       <button type="submit" class="submit-btn" onclick="submitRecipe(); return false;">
         Submit Recipe
       </button>
@@ -103,13 +100,13 @@ block content %}
   </div>
   
   
-  <!-- Add Ingredient Modal -->
+
   <div id="ingredientsModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeIngredientsModal()">&times;</span>
       <h2>Add Ingredient</h2>
       <form id="ingredientForm">
-        <!-- Ingredient Name -->
+       
         <div class="form-group">
           <label for="ingredient-name">Ingredient Name</label>
           <input
@@ -121,7 +118,7 @@ block content %}
           />
         </div>
   
-        <!-- Ingredient Amount -->
+   
         <div class="form-group">
           <label for="ingredient-amount">Amount</label>
           <input
@@ -133,7 +130,6 @@ block content %}
           />
         </div>
   
-        <!-- Add Ingredient Button -->
         <div class="submit-btn-container">
           <button type="button" class="submit-btn" onclick="addIngredient()">
             Add Ingredient
@@ -142,8 +138,122 @@ block content %}
       </form>
     </div>
   </div>
+   -->
+   <div class="formDiv">
+    <div id="createForm">
+      <span class="close" onclick="closeForm()">&times;</span>
+      <h2>Create a Recipe</h2>
   
+       <!-- Labels Section -->
+      <div class="form-labels">
+        <label id="form-label">Name</label>
+      </div>
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
   
+       <!-- Slider Form Container -->
+  <div class="slider-container">
+    <!-- Step 1 -->
+    <div class="form-step active">
+      <input
+        type="text"
+        class="recipe-inputs"
+        id="name-input"
+        name="recipe_name"
+        placeholder="Enter recipe name"
+        required
+        onfocus="updateLabel('Name')"
+      />
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="form-step">
+      <input
+        type="text"
+        class="recipe-inputs"
+        id="description-input"
+        name="recipe_description"
+        placeholder="Enter recipe description"
+        required
+        onfocus="updateLabel('Description')"
+      />
+      <button class="prev-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="form-step">
+      <input
+        type="file"
+        class="recipe-inputs"
+        id="image-input"
+        name="recipe_image"
+        accept=".jpg, .png, .jpeg"
+        onchange="previewImage(this)"
+        onfocus="updateLabel('Image')"
+      />
+      <button class="prev-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="form-step">
+      <input
+        type="number"
+        class="recipe-inputs"
+        id="number-input"
+        name="recipe_duration"
+        placeholder="Enter duration"
+        required
+        onfocus="updateLabel('Duration (minutes)')"
+      />
+      <button class="prev-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="form-step">
+      <div class="ratings-wrapper">
+        <div class="ratings">
+          <span data-rating="5">&#9733;</span>
+          <span data-rating="4">&#9733;</span>
+          <span data-rating="3">&#9733;</span>
+          <span data-rating="2">&#9733;</span>
+          <span data-rating="1">&#9733;</span>
+        </div>
+      </div>
+      <button class="prev-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="form-step">
+      <div class="recipe-inputs" id="ingredients-container">
+        <p class="placeholder-text"></p>
+      </div>
+      <div class="ingredients-btn-container">
+        <button class="ingredients-btn" type="button" onclick="openIngredientsModal()">Add Ingredient</button>
+      </div>
+      <button class="prev-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Final Step -->
+    <div class="form-step">
+      <h3>Review & Submit</h3>
+      <button class="prev-btn" onclick="prevStep()">Back</button>
+      <button type="submit" class="submit-btn" onclick="submitRecipe()">
+        Submit Recipe
+      </button>
+    </div>
+    </div>
+  </div>
+  </div>
+ 
+ 
 
   <div class="black-bar left"></div>
 
