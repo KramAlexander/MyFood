@@ -156,6 +156,7 @@ block content %}
   <div class="slider-container">
     <!-- Step 1 -->
     <div class="form-step active">
+      <div class="input-container">
       <input
         type="text"
         class="recipe-inputs"
@@ -165,6 +166,7 @@ block content %}
         required
         onfocus="updateLabel('Name')"
       />
+    </div>
       <div class="next-button-container">
         <button class="next-btn" onclick="nextStep()">Next</button>
       </div>
@@ -172,6 +174,7 @@ block content %}
 
     <!-- Step 2 -->
     <div class="form-step">
+      <div class="input-container">
       <input
         type="text"
         class="recipe-inputs"
@@ -181,6 +184,7 @@ block content %}
         required
         onfocus="updateLabel('Description')"
       />
+      </div>
       <div class="progress-buttons">
         <button class="prev-btn" onclick="prevStep()">Back</button>
         <button class="next-btn" onclick="nextStep()">Next</button>
@@ -199,17 +203,21 @@ block content %}
         onchange="previewImage(this)"
         onfocus="updateLabel('Image')"
       />
-      
+      <div class="input-container">
+        <div class="image-center-container">
+          <div id="image-preview-container" class="image-preview-container"></div>
+        </div>
+      </div>
       <div class="progress-buttons">
         <button class="prev-btn" onclick="prevStep()">Back</button>
         <label for="image-input" class="middle-btn">Select Image</label>
         <button class="next-btn" onclick="nextStep()">Next</button>
       </div>
-    <div id="image-preview-container" class="image-preview-container"></div>
     </div>
 
     <!-- Step 4 -->
     <div class="form-step">
+      <div class="input-container">
       <input
         type="number"
         class="recipe-inputs"
@@ -219,6 +227,7 @@ block content %}
         required
         onfocus="updateLabel('Duration (minutes)')"
       />
+      </div>
       <div class="progress-buttons">
         <button class="prev-btn" onclick="prevStep()">Back</button>
         <button class="next-btn" onclick="nextStep()">Next</button>
@@ -227,6 +236,7 @@ block content %}
 
     <!-- Step 5 -->
     <div class="form-step">
+      <div class="input-container">
       <div class="ratings-wrapper">
         <div class="ratings">
           <span data-rating="5">&#9733;</span>
@@ -236,6 +246,7 @@ block content %}
           <span data-rating="1">&#9733;</span>
         </div>
       </div>
+      </div>
       <div class="progress-buttons">
         <button class="prev-btn" onclick="prevStep()">Back</button>
         <button class="next-btn" onclick="nextStep()">Next</button>
@@ -244,8 +255,10 @@ block content %}
 
     <!-- Step 6 -->
     <div class="form-step">
+      <div class="input-container">
       <div class="recipe-inputs" id="ingredients-container">
         <p class="placeholder-text"></p>
+      </div>
       </div>
       <div class="ingredients-btn-container">
         
@@ -259,6 +272,7 @@ block content %}
 
     <!-- Final Step -->
     <div class="form-step">
+      <div class="input-container"></div>
       <div class="progress-buttons">
         <button class="prev-btn" onclick="prevStep()">Back</button>
         <button type="submit" class="submit-btn" onclick="submitRecipe()">

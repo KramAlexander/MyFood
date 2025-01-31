@@ -141,7 +141,10 @@ nav .right-section {
   letter-spacing: 0.6px;
   margin-bottom: 10px;
 }
-
+.input-container {
+  width: 100%;
+  height: 45px;
+}
 .recipe-inputs {
   width: 100%;
   padding: 14px;
@@ -176,7 +179,7 @@ nav .right-section {
 
 .progress-fill {
   height: 100%;
-  width: 50%; 
+  width: 50%;
   background: linear-gradient(
     to right,
     #b388ff 0%,
@@ -187,7 +190,6 @@ nav .right-section {
   border-radius: 4px;
   transition: width 0.5s ease-in-out;
 }
-
 
 /* Slider Container */
 .slider-container {
@@ -212,8 +214,9 @@ nav .right-section {
 .progress-buttons {
   display: flex;
   justify-content: space-between;
+  margin-top: auto;
 }
-/* Shared Styles for All Buttons */
+
 button,
 .middle-btn,
 .prev-btn {
@@ -226,37 +229,33 @@ button,
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  display: inline-block; /* Ensures same height */
+  display: inline-block;
   text-align: center;
 }
 
-/* ✅ Next Button (Main Action) */
 button {
-  background: linear-gradient(to right, #b388ff, #6ea8ff); /* Light purple → Light blue */
+  background: linear-gradient(to right, #b388ff, #6ea8ff);
 }
 
 button:hover {
-  background: linear-gradient(to right, #a070ff, #5c98ff); /* Darker on hover */
+  background: linear-gradient(to right, #a070ff, #5c98ff);
 }
 
-/* ✅ Middle Button (Purple on Both Sides, Blue in Center) */
 .middle-btn {
-  background: linear-gradient(to right, #b388ff, #6ea8ff 50%, #b388ff); /* Purple → Blue → Purple */
+  background: linear-gradient(to right, #b388ff, #6ea8ff 50%, #b388ff);
 }
 
 .middle-btn:hover {
-  background: linear-gradient(to right, #a070ff, #5c98ff 50%, #a070ff); /* Darker hover */
+  background: linear-gradient(to right, #a070ff, #5c98ff 50%, #a070ff);
 }
 
-/* ✅ Previous Button (Inverted Gradient) */
 .prev-btn {
-  background: linear-gradient(to left, #b388ff, #6ea8ff); /* Light blue → Light purple */
+  background: linear-gradient(to left, #b388ff, #6ea8ff);
 }
 
 .prev-btn:hover {
-  background: linear-gradient(to left, #a070ff, #5c98ff); /* Darker hover */
+  background: linear-gradient(to left, #a070ff, #5c98ff);
 }
-
 
 /* Modal */
 /* .modal {
@@ -358,52 +357,40 @@ button {
   animation: borderGlow 3s infinite alternate;
   z-index: 999;
 }
+
 .remove-btn {
-  background-color: rgba(200, 60, 60, 1);
+  background: linear-gradient(to right, #b388ff, #6ea8ff);
+  padding: 2px 4px;
   margin-left: 10px;
+  margin-bottom: 50px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  display: inline-block; /* Ensures same height */
+  text-align: center;
   color: white;
   border: none;
-  padding: 0.5px 3px;
-  font-size: 12px;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .remove-btn:hover {
-  background-color: rgba(160, 40, 40, 1);
+  background: linear-gradient(to right, #a070ff, #5c98ff);
 }
-
-
+.image-center-container {
+  display: flex;
+  justify-content: center;
+}
 .image-preview-container img {
-  margin-left: 30px;
-  max-width: 30%;
+  max-width: 40%;
   max-height: 60px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.image-preview-container .remove-btn {
-  background-color: rgba(200, 60, 60, 1);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  font-size: 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.image-preview-container .remove-btn:hover {
-  background-color: rgba(160, 40, 40, 1);
-}
 .hidden {
   display: none;
-}
-/* Ingredient Section */
-#ingredients-container {
-  margin-bottom: 20px;
-  padding: 15px;
 }
 
 /* Cards */
@@ -605,7 +592,6 @@ button {
 .ratings-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
 }
 
 .ratings {

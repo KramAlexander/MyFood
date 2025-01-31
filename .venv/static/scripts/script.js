@@ -57,7 +57,8 @@ function addIngredient() {
     // Add ingredient details and a remove button
     ingredientDiv.innerHTML = `
       <span>- ${name} | ${amount}</span>
-      <button type="button" class="remove-btn" onclick="removeIngredient(this)">-</button>
+      <span class="remove-btn" onclick="removeIngredient(this)">-</span>
+
 
     `;
 
@@ -275,7 +276,7 @@ function previewImage(input) {
       img.src = e.target.result;
       img.alt = file.name;
 
-      const removeBtn = document.createElement("button");
+      const removeBtn = document.createElement("span");
       removeBtn.textContent = "Remove";
       removeBtn.className = "remove-btn";
       removeBtn.onclick = function () {
