@@ -110,7 +110,7 @@ nav .right-section {
 }
 
 .formDiv {
-  position: fixed; /* Ensures it stays on top */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -118,19 +118,26 @@ nav .right-section {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  z-index: 1000; /* Stays above other content */
-  display: none; /* Hidden by default */
+  z-index: 1000;
+  display: none;
 }
 
 #createForm {
-  position: relative; /* Positioned within .formDiv */
+  position: relative;
   background-color: rgba(0, 0, 0, 0.8);
   width: 400px;
   height: 350px;
-  border-radius: 8px; /* Optional styling */
+  border-radius: 8px;
   padding: 20px;
   z-index: 1001;
+}
+.form-bottom-slider {
+  width: 111%;
+  height: 50px;
+  margin-top: 40px;
+  margin-left: -20px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 .form-labels {
   text-align: center;
@@ -143,7 +150,7 @@ nav .right-section {
 }
 .input-container {
   width: 100%;
-  height: 45px;
+  height: 55px;
 }
 .recipe-inputs {
   width: 100%;
@@ -189,6 +196,67 @@ nav .right-section {
   );
   border-radius: 4px;
   transition: width 0.5s ease-in-out;
+}
+
+.progress-dots {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  gap: 10px;
+  height: 100%; /
+}
+
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3); /* Default inactive color */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+.dot:nth-child(1).active {
+  background: linear-gradient(to right, #b388ff, #9e8cff); /* Purple gradient */
+}
+
+.dot:nth-child(2).active {
+  background: linear-gradient(to right, #a070ff, #6ea8ff); /* Slightly more blue */
+}
+
+.dot:nth-child(3).active {
+  background: linear-gradient(to right, #8e88ff, #70a8ff); /* More blue */
+}
+
+.dot:nth-child(4).active {
+  background: linear-gradient(to right, #7088ff, #5c98ff); /* Dominantly blue */
+}
+
+.dot:nth-child(5).active {
+  background: linear-gradient(to right, #5c88ff, #4d94ff); /* Blue with a softer end */
+}
+
+.dot:nth-child(6).active {
+  background: linear-gradient(to right, #4d88ff, #3c88ff); /* Deeper blue */
+}
+
+.dot:nth-child(7).active {
+  background: linear-gradient(to right, #3c78ff, #2a78ff); /* Strong blue finish */
+}
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5); /* Increase size */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.dot.grow {
+  animation: grow 0.3s ease-in-out; /* Apply the grow animation */
 }
 
 /* Slider Container */

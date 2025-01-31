@@ -355,6 +355,23 @@ function showStep() {
   // Update the progress bar
   progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
 
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach((dot, index) => {
+    dot.classList.toggle("active", index <= currentStep);
+  });
+
+  if (currentStep === steps.length - 1) {
+    dots.forEach((dot, index) => {
+      setTimeout(() => {
+        dot.classList.add("grow");
+
+        setTimeout(() => {
+          dot.classList.remove("grow");
+        }, 300);
+      }, index * 150);
+    });
+  }
+
   updateLabel();
 }
 
