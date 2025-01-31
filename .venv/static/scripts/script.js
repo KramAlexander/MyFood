@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => observer.observe(card));
 });
-let currentStep = 0; 
+let currentStep = 0;
 const steps = document.querySelectorAll(".form-step");
 const progress = document.getElementById("progress");
 const formLabel = document.getElementById("form-label");
