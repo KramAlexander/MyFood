@@ -126,8 +126,8 @@ nav .right-section {
 #createForm {
   position: relative; /* Positioned within .formDiv */
   background-color: rgba(0, 0, 0, 0.8);
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 350px;
   border-radius: 8px; /* Optional styling */
   padding: 20px;
   z-index: 1001;
@@ -174,12 +174,20 @@ nav .right-section {
   position: relative;
 }
 
-.progress {
+.progress-fill {
   height: 100%;
-  width: 0%;
-  background: #4caf50;
-  transition: width 0.3s ease-in-out;
+  width: 50%; 
+  background: linear-gradient(
+    to right,
+    #b388ff 0%,
+    #9e8cff 30%,
+    #6ea8ff 70%,
+    #4d94ff 100%
+  );
+  border-radius: 4px;
+  transition: width 0.5s ease-in-out;
 }
+
 
 /* Slider Container */
 .slider-container {
@@ -197,29 +205,58 @@ nav .right-section {
 .form-step.active {
   display: block;
 }
-
-button {
+.next-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.progress-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+/* Shared Styles for All Buttons */
+button,
+.middle-btn,
+.prev-btn {
   margin-top: 20px;
   padding: 10px 20px;
   border: none;
-  background-color: #4caf50;
   color: white;
   font-size: 16px;
-  border-radius: 4px;
+  font-weight: bold;
+  border-radius: 6px;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-block; /* Ensures same height */
+  text-align: center;
+}
+
+/* ✅ Next Button (Main Action) */
+button {
+  background: linear-gradient(to right, #b388ff, #6ea8ff); /* Light purple → Light blue */
 }
 
 button:hover {
-  background-color: #45a049;
+  background: linear-gradient(to right, #a070ff, #5c98ff); /* Darker on hover */
 }
 
+/* ✅ Middle Button (Purple on Both Sides, Blue in Center) */
+.middle-btn {
+  background: linear-gradient(to right, #b388ff, #6ea8ff 50%, #b388ff); /* Purple → Blue → Purple */
+}
+
+.middle-btn:hover {
+  background: linear-gradient(to right, #a070ff, #5c98ff 50%, #a070ff); /* Darker hover */
+}
+
+/* ✅ Previous Button (Inverted Gradient) */
 .prev-btn {
-  background-color: #bbb;
+  background: linear-gradient(to left, #b388ff, #6ea8ff); /* Light blue → Light purple */
 }
 
 .prev-btn:hover {
-  background-color: #999;
+  background: linear-gradient(to left, #a070ff, #5c98ff); /* Darker hover */
 }
+
 
 /* Modal */
 /* .modal {
@@ -296,48 +333,11 @@ button {
   border: 2px solid rgba(255, 255, 255, 0.3);
   animation: borderGlow 3s infinite alternate;
 }
-.image-btn {
-  display: inline-block;
-  font-family: "Lato", sans-serif;
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  padding: 10px 18px;
-  color: white;
-  background-color: rgba(30, 30, 30, 1);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  animation: borderGlow 3s infinite alternate;
-}
+
 .image-row {
   display: flex;
 }
-.image-preview-container img {
-  margin-left: 30px;
-  max-width: 30%;
-  max-height: 60px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.image-preview-container .remove-btn {
-  background-color: rgba(200, 60, 60, 1);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  font-size: 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.image-preview-container .remove-btn:hover {
-  background-color: rgba(160, 40, 40, 1);
-}
-.hidden {
-  display: none;
-} */
+ */
 
 /* Floating Button */
 .floating-button {
@@ -374,6 +374,32 @@ button {
   background-color: rgba(160, 40, 40, 1);
 }
 
+
+.image-preview-container img {
+  margin-left: 30px;
+  max-width: 30%;
+  max-height: 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.image-preview-container .remove-btn {
+  background-color: rgba(200, 60, 60, 1);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-preview-container .remove-btn:hover {
+  background-color: rgba(160, 40, 40, 1);
+}
+.hidden {
+  display: none;
+}
 /* Ingredient Section */
 #ingredients-container {
   margin-bottom: 20px;

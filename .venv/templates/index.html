@@ -142,7 +142,6 @@ block content %}
    <div class="formDiv">
     <div id="createForm">
       <span class="close" onclick="closeForm()">&times;</span>
-      <h2>Create a Recipe</h2>
   
        <!-- Labels Section -->
       <div class="form-labels">
@@ -150,7 +149,7 @@ block content %}
       </div>
       <!-- Progress Bar -->
       <div class="progress-bar">
-        <div class="progress" id="progress"></div>
+        <div class="progress-fill" id="progress"></div>
       </div>
   
        <!-- Slider Form Container -->
@@ -166,7 +165,9 @@ block content %}
         required
         onfocus="updateLabel('Name')"
       />
-      <button class="next-btn" onclick="nextStep()">Next</button>
+      <div class="next-button-container">
+        <button class="next-btn" onclick="nextStep()">Next</button>
+      </div>
     </div>
 
     <!-- Step 2 -->
@@ -180,23 +181,31 @@ block content %}
         required
         onfocus="updateLabel('Description')"
       />
-      <button class="prev-btn" onclick="prevStep()">Back</button>
-      <button class="next-btn" onclick="nextStep()">Next</button>
+      <div class="progress-buttons">
+        <button class="prev-btn" onclick="prevStep()">Back</button>
+        <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
     </div>
 
     <!-- Step 3 -->
     <div class="form-step">
+      
       <input
         type="file"
-        class="recipe-inputs"
+        class="recipe-inputs hidden"
         id="image-input"
         name="recipe_image"
         accept=".jpg, .png, .jpeg"
         onchange="previewImage(this)"
         onfocus="updateLabel('Image')"
       />
-      <button class="prev-btn" onclick="prevStep()">Back</button>
-      <button class="next-btn" onclick="nextStep()">Next</button>
+      
+      <div class="progress-buttons">
+        <button class="prev-btn" onclick="prevStep()">Back</button>
+        <label for="image-input" class="middle-btn">Select Image</label>
+        <button class="next-btn" onclick="nextStep()">Next</button>
+      </div>
+    <div id="image-preview-container" class="image-preview-container"></div>
     </div>
 
     <!-- Step 4 -->
@@ -210,8 +219,10 @@ block content %}
         required
         onfocus="updateLabel('Duration (minutes)')"
       />
-      <button class="prev-btn" onclick="prevStep()">Back</button>
-      <button class="next-btn" onclick="nextStep()">Next</button>
+      <div class="progress-buttons">
+        <button class="prev-btn" onclick="prevStep()">Back</button>
+        <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
     </div>
 
     <!-- Step 5 -->
@@ -225,8 +236,10 @@ block content %}
           <span data-rating="1">&#9733;</span>
         </div>
       </div>
-      <button class="prev-btn" onclick="prevStep()">Back</button>
-      <button class="next-btn" onclick="nextStep()">Next</button>
+      <div class="progress-buttons">
+        <button class="prev-btn" onclick="prevStep()">Back</button>
+        <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
     </div>
 
     <!-- Step 6 -->
@@ -235,19 +248,23 @@ block content %}
         <p class="placeholder-text"></p>
       </div>
       <div class="ingredients-btn-container">
-        <button class="ingredients-btn" type="button" onclick="openIngredientsModal()">Add Ingredient</button>
+        
       </div>
-      <button class="prev-btn" onclick="prevStep()">Back</button>
-      <button class="next-btn" onclick="nextStep()">Next</button>
+      <div class="progress-buttons">
+        <button class="prev-btn" onclick="prevStep()">Back</button>
+        <button class="middle-btn" type="button" onclick="openIngredientsModal()">Add Ingredient</button>
+        <button class="next-btn" onclick="nextStep()">Next</button>
+    </div>
     </div>
 
     <!-- Final Step -->
     <div class="form-step">
-      <h3>Review & Submit</h3>
-      <button class="prev-btn" onclick="prevStep()">Back</button>
-      <button type="submit" class="submit-btn" onclick="submitRecipe()">
-        Submit Recipe
-      </button>
+      <div class="progress-buttons">
+        <button class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="submit" class="submit-btn" onclick="submitRecipe()">
+        Submit
+        </button>
+      </div>
     </div>
     </div>
   </div>
