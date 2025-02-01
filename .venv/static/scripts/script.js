@@ -50,11 +50,9 @@ function addIngredient() {
   const amount = document.getElementById("ingredient-amount").value.trim();
 
   if (name && amount) {
-    // Create a new ingredient item
     const ingredientDiv = document.createElement("div");
     ingredientDiv.className = "ingredient-item";
 
-    // Add ingredient details and a remove button
     ingredientDiv.innerHTML = `
       <span>- ${name} | ${amount}</span>
       <span class="remove-btn" onclick="removeIngredient(this)">-</span>
@@ -62,7 +60,6 @@ function addIngredient() {
 
     `;
 
-    // Find the correct container to add ingredients
     const ingredientsContainer = document.querySelector(
       "#ingredients-container"
     );
@@ -70,31 +67,26 @@ function addIngredient() {
       const placeholderText =
         ingredientsContainer.querySelector(".placeholder-text");
 
-      // Remove placeholder if present
       if (placeholderText) {
         placeholderText.remove();
       }
 
-      // Add the new ingredient to the container
       ingredientsContainer.appendChild(ingredientDiv);
     } else {
       console.error("Ingredients container not found.");
     }
 
-    // Clear input fields and close modal
     closeIngredientsModal();
   } else {
     alert("Please fill out both fields.");
   }
 }
 
-// Function to remove an ingredient
 function removeIngredient(button) {
   const ingredientDiv = button.parentElement;
   if (ingredientDiv) {
     ingredientDiv.remove();
 
-    // Check if the container is now empty and add a placeholder if needed
     const ingredientsContainer = document.querySelector(
       "#ingredients-container"
     );
@@ -195,8 +187,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const observerOptions = {
     root: null,
-    rootMargin: "100px 0px -50px 0px", // Extend the top boundary for earlier appearance
-    threshold: [0, 0.5], // Trigger on fully invisible (0) and partially visible (0.5)
+    rootMargin: "100px 0px -50px 0px",
+    threshold: [0, 0.5],
   };
 
   const observerCallback = (entries) => {
@@ -204,11 +196,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       const card = entry.target;
 
       if (entry.intersectionRatio >= 0.5) {
-        // Slide in when at least 50% visible
         card.classList.add("slide-in");
         card.classList.remove("slide-out");
       } else if (entry.intersectionRatio === 0) {
-        // Reset animation when completely out of view
         card.classList.remove("slide-in");
         card.classList.add("slide-out");
       }
@@ -262,6 +252,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     addRecipeCard(recipeData);
   });
 });
+let uploadedImageURL = "";
 
 function previewImage(input) {
   const container = document.getElementById("image-preview-container");
@@ -272,6 +263,8 @@ function previewImage(input) {
     const reader = new FileReader();
 
     reader.onload = function (e) {
+      uploadedImageURL = e.target.result; // Store the image URL globally
+
       const img = document.createElement("img");
       img.src = e.target.result;
       img.alt = file.name;
@@ -352,7 +345,6 @@ function showStep() {
     }
   });
 
-  // Update the progress bar
   progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
 
   const dots = document.querySelectorAll(".dot");
@@ -361,6 +353,7 @@ function showStep() {
   });
 
   if (currentStep === steps.length - 1) {
+    displayFinalImage();
     dots.forEach((dot, index) => {
       setTimeout(() => {
         dot.classList.add("grow");
@@ -389,5 +382,30 @@ function prevStep() {
   }
 }
 
-// Initialize the first step
 showStep();
+function displayFinalImage() {
+  const finalImageContainer = document.getElementById("final-image-preview");
+  const finalTitleContainer = document.getElementById("final-title-preview");
+
+  finalImageContainer.innerHTML = "";
+  finalTitleContainer.innerHTML = "";
+
+  const recipeName = document.getElementById("name-input").value.trim();
+
+  if (uploadedImageURL) {
+    const img = document.createElement("img");
+    img.src = uploadedImageURL;
+    img.alt = "Uploaded Recipe Image";
+    img.style.maxWidth = "120px";
+    img.style.borderRadius = "8px";
+    img.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.3)";
+    img.style.margin = "0 auto";
+    img.style.display = "block";
+
+    finalImageContainer.appendChild(img);
+  }
+
+  if (recipeName) {
+    finalTitleContainer.textContent = recipeName;
+  }
+}

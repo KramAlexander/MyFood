@@ -151,6 +151,8 @@ nav .right-section {
 .input-container {
   width: 100%;
   height: 55px;
+  text-align:center;
+ 
 }
 .recipe-inputs {
   width: 100%;
@@ -211,37 +213,37 @@ nav .right-section {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3); /* Default inactive color */
+  background-color: rgba(255, 255, 255, 0.3);
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 
 .dot:nth-child(1).active {
-  background: linear-gradient(to right, #b388ff, #9e8cff); /* Purple gradient */
+  background: linear-gradient(to right, #b388ff, #9e8cff);
 }
 
 .dot:nth-child(2).active {
-  background: linear-gradient(to right, #a070ff, #6ea8ff); /* Slightly more blue */
+  background: linear-gradient(to right, #a070ff, #6ea8ff); 
 }
 
 .dot:nth-child(3).active {
-  background: linear-gradient(to right, #8e88ff, #70a8ff); /* More blue */
+  background: linear-gradient(to right, #8e88ff, #70a8ff); 
 }
 
 .dot:nth-child(4).active {
-  background: linear-gradient(to right, #7088ff, #5c98ff); /* Dominantly blue */
+  background: linear-gradient(to right, #7088ff, #5c98ff); 
 }
 
 .dot:nth-child(5).active {
-  background: linear-gradient(to right, #5c88ff, #4d94ff); /* Blue with a softer end */
+  background: linear-gradient(to right, #5c88ff, #4d94ff); 
 }
 
 .dot:nth-child(6).active {
-  background: linear-gradient(to right, #4d88ff, #3c88ff); /* Deeper blue */
+  background: linear-gradient(to right, #4d88ff, #3c88ff); 
 }
 
 .dot:nth-child(7).active {
-  background: linear-gradient(to right, #3c78ff, #2a78ff); /* Strong blue finish */
+  background: linear-gradient(to right, #3c78ff, #2a78ff); 
 }
 @keyframes grow {
   0% {
@@ -325,88 +327,6 @@ button:hover {
   background: linear-gradient(to left, #a070ff, #5c98ff);
 }
 
-/* Modal */
-/* .modal {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  overflow-y: auto;
-}
-
-.modal-content {
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
-  background-color: rgba(30, 30, 30, 0.98);
-  width: 100%;
-  max-width: 500px;
-}
-
-.close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 24px;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  transition: color 0.3s ease-in-out;
-}
-
-.close:hover {
-  color: white;
-}
-
-
-.form h2,
-.modal h2 {
-  color: white;
-  font-size: 30px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-  font-family: "Lato", sans-serif;
-  text-transform: uppercase;
-}
-
-.form-group {
-  margin-bottom: 25px;
-}
-
-
-
-
-
-
-button {
-  display: inline-block;
-  font-family: "Lato", sans-serif;
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  padding: 10px 18px;
-  color: white;
-  background-color: rgba(30, 30, 30, 1);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  animation: borderGlow 3s infinite alternate;
-}
-
-.image-row {
-  display: flex;
-}
- */
-
-/* Floating Button */
 .floating-button {
   position: fixed;
   bottom: 20px;
@@ -437,7 +357,7 @@ button {
   border: none;
   border-radius: 6px;
   transition: all 0.3s ease-in-out;
-  display: inline-block; /* Ensures same height */
+  display: inline-block; 
   text-align: center;
   color: white;
   border: none;
@@ -446,6 +366,42 @@ button {
 .remove-btn:hover {
   background: linear-gradient(to right, #a070ff, #5c98ff);
 }
+#final-image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform:translateX(-10px);
+
+}
+#final-image-preview img {
+  max-width:200px;
+  max-height:80px;
+  border-radius: 8px;
+}
+
+#final-title-preview {
+  position: relative;     
+  z-index: 9999;          
+  display: block;         
+  font-size: 10px;         
+  font-weight: bold;     
+  color: #ffffff;        
+  text-align: center;      
+  max-width: 35%;         
+  word-wrap: break-word;  
+  overflow-wrap: break-word; 
+  white-space: normal;   
+  margin: 5px auto;      
+
+  padding: 5px 10px;      
+  border-radius: 6px;   
+  line-height: 1.5;        
+  transform:translateX(-10px);
+}
+
+
+
+
 .image-center-container {
   display: flex;
   justify-content: center;
@@ -602,7 +558,7 @@ button {
   }
 }
 
-/* Black Bar */
+
 .black-bar {
   position: fixed;
   top: 0;
