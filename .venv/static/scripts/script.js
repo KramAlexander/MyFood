@@ -90,50 +90,68 @@ function removeIngredient(button) {
 }
 
 async function submitRecipe() {
-  const name = document.getElementById("name-input").value.trim();
-  const description = document.getElementById("description-input").value.trim();
-  const imageInput = document.getElementById("image-input");
-  const image = imageInput.files[0];
-  const filename = image.name;
-
-  let formData = new FormData();
-  formData.append("image", image);
-  fetch("/upload/image", { method: "POST", body: formData });
-
-  const duration = document.getElementById("number-input").value.trim();
-  const difficulty = document.querySelector(
-    ".ratings span[data-clicked='true']"
-  )?.dataset.rating;
-  const ingredients = [];
-
-  document.querySelectorAll(".ingredient-item span").forEach((item) => {
-    const [ingredientName, ingredientAmount] = item.textContent.split(" | ");
-    ingredients.push(`${ingredientName.trim()} (${ingredientAmount.trim()})`);
-  });
-
-  if (
-    !name ||
-    !description ||
-    !filename ||
-    !duration ||
-    !difficulty ||
-    ingredients.length === 0
-  ) {
-    alert("Please fill out all fields and add at least one ingredient.");
-    return;
-  }
-
-  const data = {
-    name,
-    description,
-    image_url: `static/uploads/${image.name}`,
-
-    duration: parseInt(duration, 10),
-    ingredients,
-    difficulty: parseFloat(difficulty),
-  };
-
   try {
+    const name = document.getElementById("name-input").value.trim();
+    const description = document
+      .getElementById("description-input")
+      .value.trim();
+    const imageInput = document.getElementById("image-input");
+    const image = imageInput.files[0]; 
+
+    if (!image) {
+      alert("Please select an image.");
+      return;
+    }
+
+    const filename = image.name;
+
+    let formData = new FormData();
+    formData.append("image", image);
+
+    const uploadResponse = await fetch("/upload/image", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!uploadResponse.ok) {
+      alert("Image upload failed. Please try again.");
+      return;
+    }
+
+    const duration = document.getElementById("number-input").value.trim();
+    const difficulty = document.querySelector(
+      ".ratings span[data-clicked='true']"
+    )?.dataset.rating;
+
+    if (!name || !description || !filename || !duration || !difficulty) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    const ingredients = [];
+    document.querySelectorAll(".ingredient-item span").forEach((item) => {
+      const [ingredientName, ingredientAmount] = item.textContent.split(" | ");
+      if (ingredientName && ingredientAmount) {
+        ingredients.push(
+          `${ingredientName.trim()} (${ingredientAmount.trim()})`
+        );
+      }
+    });
+
+    if (ingredients.length === 0) {
+      alert("Please add at least one ingredient.");
+      return;
+    }
+
+    const data = {
+      name,
+      description,
+      image_url: `static/uploads/${filename}`, 
+      duration: parseInt(duration, 10),
+      ingredients,
+      difficulty: parseFloat(difficulty),
+    };
+
     const response = await fetch("/api/recipes/", {
       method: "POST",
       headers: {
@@ -142,20 +160,20 @@ async function submitRecipe() {
       body: JSON.stringify(data),
     });
 
-    const result = await response.json();
     if (response.ok) {
       alert("Recipe created successfully!");
-      console.log("New Recipe:", result);
+      console.log("New Recipe:", await response.json());
       location.reload();
     } else {
       alert("Failed to create recipe. Please try again.");
-      console.error(result);
+      console.error("Error:", await response.json());
     }
   } catch (error) {
     console.error("Error submitting recipe:", error);
-    alert("An error occurred. Please try again later.");
+    alert("An unexpected error occurred. Please try again.");
   }
 }
+
 document.addEventListener("DOMContentLoaded", async () => {
   async function loadRecipes() {
     try {
