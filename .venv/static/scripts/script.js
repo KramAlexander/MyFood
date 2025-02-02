@@ -22,30 +22,30 @@ for (let star of stars) {
   });
 }
 function openIngredientsModal() {
-  const modal = document.getElementById("ingredientsModal");
-  const form = document.getElementById("ingredientForm");
+  const formDiv = document.querySelector(".ingredientsDiv");
+  const modal = document.getElementById("ingredientsForm");
 
-  if (modal) {
+  if (formDiv && modal) {
+    formDiv.style.display = "flex";
     modal.style.display = "flex";
   } else {
-    console.error("Ingredients modal not found.");
+    console.error("Ingredients modal or formDiv not found.");
   }
 }
 
 function closeIngredientsModal() {
-  const modal = document.getElementById("ingredientsModal");
+  const formDiv = document.querySelector(".ingredientsDiv");
+  const modal = document.getElementById("ingredientsForm");
 
-  if (modal) {
-    document.getElementById("ingredient-name").value = "";
-    document.getElementById("ingredient-amount").value = "";
+  if (formDiv && modal) {
+    formDiv.style.display = "none";
     modal.style.display = "none";
   } else {
-    console.error("Ingredients modal not found.");
+    console.error("Ingredients modal or formDiv not found.");
   }
 }
 
 function addIngredient() {
-  console.log("Adding ingredient");
   const name = document.getElementById("ingredient-name").value.trim();
   const amount = document.getElementById("ingredient-amount").value.trim();
 
@@ -54,29 +54,20 @@ function addIngredient() {
     ingredientDiv.className = "ingredient-item";
 
     ingredientDiv.innerHTML = `
-      <span>- ${name} | ${amount}</span>
-      <span class="remove-btn" onclick="removeIngredient(this)">-</span>
-
-
+      <span class="ingredient-text">${name} | ${amount}</span>
+      <span class="remove-btn" onclick="removeIngredient(this)">×</span>
     `;
 
-    const ingredientsContainer = document.querySelector(
-      "#ingredients-container"
-    );
+    const ingredientsContainer = document.querySelector("#inputed-ingredients");
     if (ingredientsContainer) {
-      const placeholderText =
-        ingredientsContainer.querySelector(".placeholder-text");
-
-      if (placeholderText) {
-        placeholderText.remove();
-      }
-
       ingredientsContainer.appendChild(ingredientDiv);
     } else {
       console.error("Ingredients container not found.");
     }
 
     closeIngredientsModal();
+    document.getElementById("ingredient-name").value = "";
+    document.getElementById("ingredient-amount").value = "";
   } else {
     alert("Please fill out both fields.");
   }
@@ -91,9 +82,6 @@ function removeIngredient(button) {
       "#ingredients-container"
     );
     if (ingredientsContainer && ingredientsContainer.children.length === 0) {
-      const placeholderText = document.createElement("p");
-      placeholderText.className = "placeholder-text";
-      placeholderText.textContent = "No ingredients added yet.";
       ingredientsContainer.appendChild(placeholderText);
     }
   } else {

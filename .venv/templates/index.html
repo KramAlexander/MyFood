@@ -123,11 +123,18 @@ block content %}
 
     <!-- Step 6 -->
     <div class="form-step">
-      <div class="input-container">
-      <div class="recipe-inputs" id="ingredients-container">
-        <p class="placeholder-text"></p>
+      <div class="input-ingredients-container">
+        <span id="placeholder-ingredients">Interact here</span>
+      <div class="ingredients-wrapper">
+        <div class="ingredients-container" id="ingredients-container">
+          <div id="inputed-ingredients">
+            
+          </div>
+        </div>
       </div>
-      </div>
+    </div>
+      
+
       <div class="ingredients-btn-container">
         
       </div>
@@ -166,7 +173,43 @@ block content %}
     </div>
   </div>
   </div>
- 
+  <div class="ingredientsDiv">
+    <div id="ingredientsForm">
+      <span class="close" onclick="closeIngredientsModal()">&times;</span>
+      <form id="ingredientForm">
+       
+        <div class="form-group">
+          <label for="ingredient-name">Ingredient Name</label>
+          <input
+            type="text"
+            id="ingredient-name"
+            class="recipe-inputs"
+            placeholder="Enter ingredient name"
+            required
+          />
+        </div>
+  
+   
+        <div class="form-group">
+          <label for="ingredient-amount">Amount</label>
+          <input
+            type="text"
+            id="ingredient-amount"
+            class="recipe-inputs"
+            placeholder="Enter amount (e.g. 2 cups)"
+            required
+          />
+        </div>
+  
+        <div class="submit-btn-container">
+          <button type="button" class="submit-btn" onclick="addIngredient()">
+            Add Ingredient
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
  
 
   <div class="black-bar left"></div>

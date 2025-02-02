@@ -109,18 +109,18 @@ nav .right-section {
   line-height: 1;
 }
 
-.formDiv {
+.formDiv, .ingredientsDiv{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   display: none;
 }
+
 
 #createForm {
   position: relative;
@@ -131,6 +131,18 @@ nav .right-section {
   padding: 20px;
   z-index: 1001;
 }
+#ingredientsForm {
+  display:none;
+  justify-content: center;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 400px;
+  height: 350px;
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1001;       
+}
+
 .form-bottom-slider {
   width: 111%;
   height: 50px;
@@ -152,8 +164,92 @@ nav .right-section {
   width: 100%;
   height: 55px;
   text-align:center;
- 
 }
+.input-ingredients-container {
+  width: 100%;
+  height: 55px;
+}
+
+.ingredients-wrapper {
+  position: absolute;
+  display: inline-block; 
+}
+
+.ingredients-container {
+  width: 360px;
+  height:60px;
+  padding: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(30, 30, 30, 1); 
+  cursor: pointer;
+  overflow-y: auto;
+
+}
+
+#inputed-ingredients {
+  visibility: hidden;
+  width:100%;
+  height: 100%; 
+  overflow-y: auto; 
+  border-radius: 5px; 
+  background-color: rgba(30, 30, 30, 0.8); 
+  color: white;
+}
+
+
+#ingredients-container:hover #inputed-ingredients {
+  visibility: visible;
+}
+
+.ingredients-wrapper:hover .ingredients-container {
+  width: 360px;
+  height: 200px; 
+  color: rgba(200, 200, 200, 0.6);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+  position: relative;
+  background-color: rgba(40, 40, 40, 1);
+  outline: none;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
+#placeholder-ingredients {
+  position:absolute;
+  top:113px;
+  left:156px;
+  color: rgba(200, 200, 200, 0.6);
+  z-index:1;
+}
+.ingredient-item {
+  display: flex;
+  justify-content: space-between; 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 16px; 
+  color: #fff; 
+  margin: 0;
+}
+
+.ingredient-item span {
+  margin-top:5px;
+  margin-bottom: 5px; 
+  padding: 4px; 
+  line-height: 1;
+}
+
+.ingredient-text {
+  margin-right: 10px; 
+  word-break: break-word;
+}
+
+.ingredient-item:last-child {
+  border-bottom: none;
+}
+
 .recipe-inputs {
   width: 100%;
   padding: 14px;
@@ -261,6 +357,13 @@ nav .right-section {
   animation: grow 0.3s ease-in-out; /* Apply the grow animation */
 }
 
+.close {
+  font-size:25px;
+  left:12px;
+  top:0px;
+  position:absolute;
+  color:white;
+}
 /* Slider Container */
 .slider-container {
   display: flex;
