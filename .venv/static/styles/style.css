@@ -425,6 +425,11 @@ nav .right-section {
   top:0px;
   position:absolute;
   color:white;
+  transition: all 0.2s ease-in-out;
+}
+.close:hover {
+  transform: scale(1.2);
+  cursor:pointer;
 }
 /* Slider Container */
 .slider-container {
@@ -509,8 +514,12 @@ button:hover {
   border: 2px solid rgba(255, 255, 255, 0.3);
   animation: borderGlow 3s infinite alternate;
   z-index: 999;
+  transition: all 0.2s ease-in-out;
 }
-
+.floating-button:hover{
+  transform:scale(1.2);
+  cursor:pointer;
+}
 .remove-btn {
   background: linear-gradient(to right, #b388ff, #6ea8ff);
   padding: 2px 4px;
@@ -564,9 +573,6 @@ button:hover {
   transform:translateX(-10px);
 }
 
-
-
-
 .image-center-container {
   display: flex;
   justify-content: center;
@@ -608,7 +614,7 @@ button:hover {
   z-index: 100;
 
   transform: translateY(50px);
-  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
 }
 
 .card.slide-in {
