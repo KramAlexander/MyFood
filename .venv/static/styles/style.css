@@ -30,8 +30,39 @@ html {
 .content {
   margin-top: 80px;
 }
+.search {
+  margin:0;
+  margin-top:-8px;
+  border: none;
+  background: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
 
-/* Navbar */
+.search-container {
+  display: none;             
+  position: fixed;
+  top: 70px;                 
+  right: 20px;
+  z-index: 1100;
+}
+
+.search-input {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background-color: rgba(30, 30, 30, 1);
+  color: white;
+  outline: none;
+  width: 200px;
+}
+
+.search-input::placeholder {
+  color: rgba(200, 200, 200, 0.6);
+}
+
+
 .navbar-title {
   font-size: 20px;
   font-weight: bold;
@@ -75,7 +106,7 @@ nav ul {
 }
 
 nav ul li {
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
 nav .right-section {
@@ -527,6 +558,7 @@ button:hover {
   justify-content: space-around;
   gap: 30px;
   margin: 0 auto;
+
   padding: 0 40px;
   max-width: 1200px;
   box-sizing: border-box;

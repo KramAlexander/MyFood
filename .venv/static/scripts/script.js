@@ -96,7 +96,7 @@ async function submitRecipe() {
       .getElementById("description-input")
       .value.trim();
     const imageInput = document.getElementById("image-input");
-    const image = imageInput.files[0]; 
+    const image = imageInput.files[0];
 
     if (!image) {
       alert("Please select an image.");
@@ -146,7 +146,7 @@ async function submitRecipe() {
     const data = {
       name,
       description,
-      image_url: `static/uploads/${filename}`, 
+      image_url: `static/uploads/${filename}`,
       duration: parseInt(duration, 10),
       ingredients,
       difficulty: parseFloat(difficulty),
@@ -415,3 +415,46 @@ function displayFinalImage() {
     finalTitleContainer.textContent = recipeName;
   }
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const searchBtn = document.querySelector(".search");
+  const searchContainer = document.querySelector(".search-container");
+  const searchInput = document.getElementById("search-input");
+
+  searchBtn.addEventListener("click", function (e) {
+    e.preventDefault(); 
+
+    if (
+      searchContainer.style.display === "none" ||
+      searchContainer.style.display === ""
+    ) {
+      searchContainer.style.display = "block";
+      searchInput.focus();
+    } else {
+      searchContainer.style.display = "none";
+      searchInput.value = "";
+      filterCards("");
+    }
+  });
+  searchInput.addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    filterCards(searchTerm);
+  });
+
+  function filterCards(searchTerm) {
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card) => {
+
+      const titleElem = card.querySelector("h2");
+      const descElem = card.querySelector(".card-text");
+
+      const titleText = titleElem ? titleElem.textContent.toLowerCase() : "";
+      const descText = descElem ? descElem.textContent.toLowerCase() : "";
+
+      if (titleText.includes(searchTerm) || descText.includes(searchTerm)) {
+        card.style.display = ""; 
+      } else {
+        card.style.display = "none"; 
+      }
+    });
+  }
+});

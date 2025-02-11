@@ -31,11 +31,20 @@
           <ul class="list">
             <li><a href="#">Browse</a></li>
             <li><a href="#">Chatbot</a></li>
-            <li><a href="#">Contact</a></li>
+            <li>
+              <a href="#" class="search btn btn-outline-secondary">
+                <i class="bi bi-search"></i>
+              </a>
+            </li>
           </ul>
-          <button class="search"></button>
         </div>
       </nav>
+      
+      <!-- Search field container (hidden by default) -->
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search recipes..." class="search-input" />
+      </div>
+      
       
     <div class="content">{% block content %}{% endblock %}</div></div>
     <script
