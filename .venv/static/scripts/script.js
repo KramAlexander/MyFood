@@ -442,19 +442,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function filterCards(searchTerm) {
     const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => {
-
+    
+    cards.forEach(card => {
+  
       const titleElem = card.querySelector("h2");
-      const descElem = card.querySelector(".card-text");
-
       const titleText = titleElem ? titleElem.textContent.toLowerCase() : "";
-      const descText = descElem ? descElem.textContent.toLowerCase() : "";
-
-      if (titleText.includes(searchTerm) || descText.includes(searchTerm)) {
+      
+      if (titleText.includes(searchTerm)) {
         card.style.display = ""; 
       } else {
         card.style.display = "none"; 
       }
     });
   }
+  
 });
