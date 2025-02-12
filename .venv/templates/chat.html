@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block title %}Chat - MyFood{% endblock %} {% block
+content %}
+<div class="black-bar left"></div>
+
+<div class="chat-page">
+  <div class="chat-container">
+    <div class="chat-header">Chat with Bot</div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-container">
+      <input type="text" id="chat-input" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<div class="black-bar right"></div>
+
+{% endblock %}

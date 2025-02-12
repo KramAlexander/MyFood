@@ -493,7 +493,7 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: parseInt(
           card.querySelector(".card-text").textContent.match(/\d+/)[0]
         ),
-        difficulty: Math.floor(Math.random() * 5) + 1, 
+        difficulty: Math.floor(Math.random() * 5) + 1,
         image_url: card.querySelector("img").src,
         ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
       };
@@ -524,7 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ),
         difficulty: "Loading...",
         image_url: card.querySelector("img").src,
-        ingredients: ["Loading..."], 
+        ingredients: ["Loading..."],
       };
 
       openRecipeDetails(recipe);
@@ -571,4 +571,22 @@ function updateRecipeDetails(recipe) {
     li.textContent = ingredient;
     ingredientsList.appendChild(li);
   });
+}
+
+function sendMessage() {
+  const inputField = document.getElementById("chat-input");
+  const message = inputField.value.trim();
+  if (message === "") return;
+
+  const messagesContainer = document.getElementById("chat-messages");
+  const userMessage = document.createElement("div");
+  userMessage.textContent = `You: ${message}`;
+  userMessage.style.padding = "5px 10px";
+  userMessage.style.marginBottom = "5px";
+  userMessage.style.background = "rgba(255, 255, 255, 0.2)";
+  userMessage.style.borderRadius = "5px";
+  messagesContainer.appendChild(userMessage);
+
+  inputField.value = "";
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }

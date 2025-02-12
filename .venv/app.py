@@ -194,8 +194,11 @@ def upload_image():
 @app.route("/")
 @app.route("/index")
 def index():
-    """Render your main template (index.html)."""
     return render_template("index.html")
+
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
 
 # --------------------------------
 # 9) Socket.IO Events (Optional)
