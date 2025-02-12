@@ -421,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-input");
 
   searchBtn.addEventListener("click", function (e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (
       searchContainer.style.display === "none" ||
@@ -442,18 +442,133 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function filterCards(searchTerm) {
     const cards = document.querySelectorAll(".card");
-    
-    cards.forEach(card => {
-  
+
+    cards.forEach((card) => {
       const titleElem = card.querySelector("h2");
       const titleText = titleElem ? titleElem.textContent.toLowerCase() : "";
-      
+
       if (titleText.includes(searchTerm)) {
-        card.style.display = ""; 
+        card.style.display = "";
       } else {
-        card.style.display = "none"; 
+        card.style.display = "none";
       }
     });
   }
-  
 });
+
+function openRecipeDetails(recipe) {
+  document.getElementById("recipe-title").textContent = recipe.name;
+  document.getElementById("recipe-description").textContent =
+    recipe.description;
+  document.getElementById("recipe-duration").textContent = recipe.duration;
+  document.getElementById("recipe-difficulty").textContent = recipe.difficulty;
+  document.getElementById("recipe-image").src =
+    recipe.image_url || "static/default-image.jpg";
+
+  const ingredientsList = document.getElementById("recipe-ingredients");
+  ingredientsList.innerHTML = "";
+  recipe.ingredients.forEach((ingredient) => {
+    const li = document.createElement("li");
+    li.textContent = ingredient;
+    ingredientsList.appendChild(li);
+  });
+
+  document.getElementById("recipe-details-modal").style.display = "flex";
+}
+
+function closeRecipeDetails() {
+  document.getElementById("recipe-details-modal").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".card .button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const card = event.target.closest(".card");
+      const recipe = {
+        name: card.querySelector("h2").textContent,
+        description: card
+          .querySelector(".card-text")
+          .textContent.split("\n")[0],
+        duration: parseInt(
+          card.querySelector(".card-text").textContent.match(/\d+/)[0]
+        ),
+        difficulty: Math.floor(Math.random() * 5) + 1, 
+        image_url: card.querySelector("img").src,
+        ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
+      };
+      openRecipeDetails(recipe);
+    });
+  });
+});
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .querySelector(".card-container")
+    .addEventListener("click", async (event) => {
+      const button = event.target.closest(".button");
+      if (!button) return;
+
+      event.preventDefault();
+      const card = button.closest(".card");
+
+      if (!card) return;
+
+      const recipeName = card.querySelector("h2").textContent;
+      const recipe = {
+        name: recipeName,
+        description: card
+          .querySelector(".card-text")
+          .textContent.split("\n")[0],
+        duration: parseInt(
+          card.querySelector(".card-text").textContent.match(/\d+/)[0]
+        ),
+        difficulty: "Loading...",
+        image_url: card.querySelector("img").src,
+        ingredients: ["Loading..."], 
+      };
+
+      openRecipeDetails(recipe);
+
+      try {
+        const response = await fetch(`/api/recipes/`);
+        if (!response.ok) throw new Error("Failed to fetch recipes");
+
+        const recipes = await response.json();
+        const recipeData = recipes.find((r) => r.name === recipeName);
+
+        if (recipeData) {
+          recipe.ingredients = recipeData.ingredients;
+          recipe.difficulty = recipeData.difficulty;
+        } else {
+          recipe.ingredients = ["No ingredients found"];
+        }
+
+        updateRecipeDetails(recipe);
+      } catch (error) {
+        console.error("Error fetching recipe details:", error);
+        updateRecipeDetails({
+          ...recipe,
+          ingredients: ["Failed to load ingredients"],
+          difficulty: "N/A",
+        });
+      }
+    });
+});
+
+function updateRecipeDetails(recipe) {
+  document.getElementById("recipe-title").textContent = recipe.name;
+  document.getElementById("recipe-description").textContent =
+    recipe.description;
+  document.getElementById("recipe-duration").textContent = recipe.duration;
+  document.getElementById("recipe-difficulty").textContent = recipe.difficulty;
+  document.getElementById("recipe-image").src =
+    recipe.image_url || "static/default-image.jpg";
+
+  const ingredientsList = document.getElementById("recipe-ingredients");
+  ingredientsList.innerHTML = "";
+  recipe.ingredients.forEach((ingredient) => {
+    const li = document.createElement("li");
+    li.textContent = ingredient;
+    ingredientsList.appendChild(li);
+  });
+}

@@ -368,8 +368,26 @@ block content %}
         </a>
       </div>
     </div>
+    <div id="recipe-details-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeRecipeDetails()">&times;</span>
+        <div class="recipe-header">
+          <img id="recipe-image" src="" alt="Recipe Image" class="recipe-image" />
+          <h2 id="recipe-title"></h2>
+        </div>
+        <div class="recipe-body">
+          <p id="recipe-description"></p>
+          <p><strong>Duration:</strong> <span id="recipe-duration"></span> minutes</p>
+          <p><strong>Difficulty:</strong> <span id="recipe-difficulty"></span>/5</p>
+          <h3>Ingredients</h3>
+          <ul id="recipe-ingredients"></ul>
+        </div>
+      </div>
+    </div>
 </div>
 <div class="black-bar right"></div>
 </div>
+
+
 </script>
 {% endblock %}

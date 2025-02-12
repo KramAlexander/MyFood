@@ -325,7 +325,7 @@ nav .right-section {
 }
 
 .recipe-inputs::placeholder {
-  color: rgba(200, 200, 200, 0.6);
+  color: rgba(200, 200, 200, 0.6); 
 }
 
 .recipe-inputs:focus {
@@ -814,4 +814,96 @@ button:hover {
 .ratings span:hover ~ span,
 .ratings span[data-clicked] ~ span {
   color: orange;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: rgba(30, 30, 30, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  width: 45%;
+  max-width: 450px;
+  color: white;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  max-height: 75vh;
+  overflow-y: auto;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+}
+
+
+.close:hover {
+  transform: scale(1.2);
+}
+
+.recipe-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.recipe-image {
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.recipe-body {
+  margin-top: 15px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+h3 {
+  margin-top: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+ul li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
 }
