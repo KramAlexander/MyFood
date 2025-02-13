@@ -590,3 +590,64 @@ function sendMessage() {
   inputField.value = "";
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
+async function sendMessage() {
+  const inputField = document.getElementById("chat-input");
+  const chatMessages = document.getElementById("chat-messages");
+  const userMessage = inputField.value.trim();
+
+  if (userMessage === "") return;
+
+  appendMessage("You", userMessage, "user-message");
+
+  inputField.value = "";
+
+  try {
+    let response = await fetch("/chat/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt: userMessage }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch response from chatbot.");
+    }
+
+    let data = await response.json();
+
+    appendMessage(
+      "Bot",
+      data.response || "No response from bot",
+      "bot-message"
+    );
+
+    setTimeout(() => {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 100);
+  } catch (error) {
+    console.error("Error:", error);
+    appendMessage(
+      "Bot",
+      "Error: Unable to connect to chatbot.",
+      "error-message"
+    );
+  }
+}
+
+function appendMessage(sender, text, className) {
+  const chatMessages = document.getElementById("chat-messages");
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("message", className);
+  messageDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+  chatMessages.appendChild(messageDiv);
+}
+
+document
+  .getElementById("chat-input")
+  .addEventListener("keypress", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });

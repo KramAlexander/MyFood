@@ -2,10 +2,12 @@
 body {
   margin: 0;
   padding: 0;
+
 }
 
 html {
   height: 100%;
+ 
 }
 
 .gradient-background {
@@ -817,6 +819,7 @@ button:hover {
 }
 
 .modal {
+
   display: none;
   position: fixed;
   z-index: 1000;

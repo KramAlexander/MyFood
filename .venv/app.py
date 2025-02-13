@@ -5,7 +5,16 @@ from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from flask_socketio import SocketIO, emit
 from sqlalchemy import JSON
 import os
+from google import genai
+from dotenv import load_dotenv
 
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY is not set in the .env file.")
+
+client = genai.Client(api_key = GEMINI_API_KEY)
 # --------------------------------
 # 1) Flask App & Config
 # --------------------------------
@@ -161,6 +170,43 @@ class Recipe(Resource):
         db.session.commit()
         return RecipeModel.query.all()
 
+chat_history = []  # Example: Store chat messages
+
+class ChatMessage:
+    def __init__(self, id, question, response):
+        self.id = id
+        self.question = question
+        self.response = response
+
+@app.route("/chat/gemini", methods=["POST"])
+def get_google_chat():  # Remove "async" here
+    data = request.get_json()
+    if not data or "prompt" not in data:
+        return jsonify({"error": "Prompt is required"}), 400
+
+    prompt = data["prompt"]
+
+    conversation_context = "\n".join(
+        [f"User: {msg.question}\nGemini: {msg.response}" for msg in chat_history]
+    )
+    full_prompt = f"{conversation_context}\nUser: {prompt}\nGemini:"
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=full_prompt
+    )
+
+    answer = response.text if response.text else "No response available."
+
+    message_id = len(chat_history) + 1
+    chat_message = ChatMessage(id=message_id, question=prompt, response=answer)
+    chat_history.append(chat_message)
+
+    return jsonify({
+        "id": message_id,
+        "question": prompt,
+        "response": answer
+    })
 # --------------------------------
 # 6) Register API Resources
 # --------------------------------
