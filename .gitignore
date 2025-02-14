@@ -1,0 +1,4 @@
+app/.env
+database.db
+migrations
+app/__pychache__

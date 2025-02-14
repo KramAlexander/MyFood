@@ -8,8 +8,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
-ENV FLASK_APP=app.py
+ENV FLASK_APP=app/app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=8000
 
-CMD ["python", "app.py"]
+# Ensure migrations are applied at container startup
+RUN flask db upgrade || flask db init && flask db migrate -m "Initial migration" && flask db upgrade
+
+CMD ["python", "-m", "flask", "run"]
