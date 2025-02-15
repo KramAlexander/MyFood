@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from flask_socketio import SocketIO, emit
 from sqlalchemy import JSON
+from sqlalchemy.exc import IntegrityError
 import os
 from google import genai
 from dotenv import load_dotenv
@@ -63,6 +64,51 @@ class RecipeModel(db.Model):
         if isinstance(self.ingredients, list) and ingredient in self.ingredients:
             self.ingredients.remove(ingredient)
 
+class UserModel(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    last_name = db.Column(db.String(80), unique=False, nullable=False)
+    first_name = db.Column(db.String(80), unique=False, nullable=False)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+
+    def __repr__(self):
+        return (
+            f"<UserModel last_name={self.last_name}, "
+            f"first_name={self.first_name}, "
+            f"email={self.email}"
+        )
+    def add_user(self, last_name, first_name, email):
+        if(not last_name or not first_name or not email):
+            return {"error": "All fields are required."}
+        new_user = UserModel(last_name=last_name, first_name=first_name, email=email)
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return {"message": "User added successfully.", "user": new_user}
+        except IntegrityError:
+            db.session.rollback()
+            return {"error": "Email already exists."}
+        except Exception as e:
+                db.session.rollback()
+                return {"error": f"An error occurred: {str(e)}"}
+    def remove_user(self, email):
+        if not email:
+            return {"error": "Email is required."}
+
+        user = UserModel.query.filter_by(email=email).first()
+
+        if not user:
+            return {"error": "User not found."}
+
+        try:
+            db.session.delete(user)
+            db.session.commit()
+            return {"message": "User removed successfully.", "user": user}
+        except Exception as e:
+            db.session.rollback()
+            return {"error": f"An error occurred: {str(e)}"}
+
 # --------------------------------
 # 3) Request Parsers
 # --------------------------------
@@ -75,7 +121,7 @@ recipe_args.add_argument(
     "ingredients",
     type=str,
     action="append",
-    required=True,
+    required=True,    
     help="Ingredients must be a list of strings",
 )
 recipe_args.add_argument("difficulty", type=float, required=True, help="Difficulty cannot be blank")
