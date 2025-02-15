@@ -594,13 +594,9 @@ body {
   .card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 30px;
-    margin: 0 auto;
-  
-    padding: 0 40px;
-    max-width: 1200px;
-    box-sizing: border-box;
+    justify-content: space-between; /* Changed from space-around to space-between */
+    gap: 30px; /* Optional: Adjust the gap between the cards */
+    padding: 0 40px; /* Keeps the padding as it is */
   }
   
   .card {

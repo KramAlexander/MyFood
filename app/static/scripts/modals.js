@@ -1,5 +1,3 @@
-console.log("modals.js is loaded");
-
 export function openForm() {
   document.querySelector(".formDiv").style.display = "flex";
 }
@@ -9,9 +7,25 @@ export function closeForm() {
 }
 
 export function openIngredientsModal() {
-  document.querySelector(".ingredientsDiv").style.display = "flex";
+  const formDiv = document.querySelector(".ingredientsDiv");
+  const modal = document.getElementById("ingredientsForm");
+
+  if (formDiv && modal) {
+    formDiv.style.display = "flex";
+    modal.style.display = "flex";
+  } else {
+    console.error("Ingredients modal or formDiv not found.");
+  }
 }
 
 export function closeIngredientsModal() {
-  document.querySelector(".ingredientsDiv").style.display = "none";
+  const formDiv = document.querySelector(".ingredientsDiv");
+  const modal = document.getElementById("ingredientsForm");
+
+  if (formDiv && modal) {
+    formDiv.style.display = "none";
+    modal.style.display = "none";
+  } else {
+    console.error("Ingredients modal or formDiv not found.");
+  }
 }

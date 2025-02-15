@@ -32,11 +32,10 @@ block content %}
               placeholder="Enter recipe name"
               maxlength="30"
               required
-              onfocus="updateLabel('Name')"
             />
           </div>
           <div class="next-button-container">
-            <button class="next-btn" onclick="nextStep()">Next</button>
+            <button class="next-btn">Next</button>
           </div>
         </div>
 
@@ -50,12 +49,11 @@ block content %}
               name="recipe_description"
               placeholder="Enter recipe description"
               required
-              onfocus="updateLabel('Description')"
             />
           </div>
           <div class="progress-buttons">
-            <button class="prev-btn" onclick="prevStep()">Back</button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
+            <button class="prev-btn">Back</button>
+            <button class="next-btn">Next</button>
           </div>
         </div>
 
@@ -67,8 +65,6 @@ block content %}
             id="image-input"
             name="recipe_image"
             accept=".jpg, .png, .jpeg"
-            onchange="previewImage(this)"
-            onfocus="updateLabel('Image')"
           />
           <div class="input-container">
             <div class="image-center-container">
@@ -79,9 +75,9 @@ block content %}
             </div>
           </div>
           <div class="progress-buttons">
-            <button class="prev-btn" onclick="prevStep()">Back</button>
+            <button class="prev-btn">Back</button>
             <label for="image-input" class="middle-btn">Select Image</label>
-            <button class="next-btn" onclick="nextStep()">Next</button>
+            <button class="next-btn">Next</button>
           </div>
         </div>
 
@@ -95,12 +91,11 @@ block content %}
               name="recipe_duration"
               placeholder="Enter duration"
               required
-              onfocus="updateLabel('Duration (minutes)')"
             />
           </div>
           <div class="progress-buttons">
-            <button class="prev-btn" onclick="prevStep()">Back</button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
+            <button class="prev-btn">Back</button>
+            <button class="next-btn">Next</button>
           </div>
         </div>
 
@@ -118,8 +113,8 @@ block content %}
             </div>
           </div>
           <div class="progress-buttons">
-            <button class="prev-btn" onclick="prevStep()">Back</button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
+            <button class="prev-btn">Back</button>
+            <button class="next-btn">Next</button>
           </div>
         </div>
 
@@ -136,15 +131,9 @@ block content %}
 
           <div class="ingredients-btn-container"></div>
           <div class="progress-buttons">
-            <button class="prev-btn" onclick="prevStep()">Back</button>
-            <button
-              class="middle-btn"
-              type="button"
-              onclick="openIngredientsModal()"
-            >
-              Add Ingredient
-            </button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
+            <button class="prev-btn">Back</button>
+            <button class="middle-btn" id="openIngredientsModel" type="button">Add Ingredient</button>
+            <button class="next-btn">Next</button>
           </div>
         </div>
 
@@ -155,8 +144,8 @@ block content %}
             <div id="final-title-preview"></div>
           </div>
           <div class="progress-buttons">
-            <button class="prev-btn" onclick="prevStep()">Back</button>
-            <button type="submit" class="submit-btn" onclick="submitRecipe()">
+            <button class="prev-btn">Back</button>
+            <button type="submit" class="submit-btn" id="submit-Recipe-btn">
               Submit
             </button>
           </div>
@@ -177,7 +166,7 @@ block content %}
   </div>
   <div class="ingredientsDiv">
     <div id="ingredientsForm">
-      <span class="close" onclick="closeIngredientsModal()">&times;</span>
+      <span class="close">&times;</span>
       <form id="ingredientForm">
         <div class="form-group">
           <label for="ingredient-name">Ingredient Name</label>
@@ -202,7 +191,7 @@ block content %}
         </div>
 
         <div class="submit-btn-container">
-          <button type="button" class="submit-btn" onclick="addIngredient()">
+          <button type="button" class="submit-btn" id="add-ingredient-submit">
             Add Ingredient
           </button>
         </div>
@@ -215,7 +204,7 @@ block content %}
   <div class="card-container">
     <div id="recipe-details-modal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="closeRecipeDetails()">&times;</span>
+        <span class="close" id="close-recipe-details">&times;</span>
         <div class="recipe-header">
           <img
             id="recipe-image"
