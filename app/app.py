@@ -191,7 +191,7 @@ def get_google_chat():  # Remove "async" here
     )
     full_prompt = f"{conversation_context}\nUser: {prompt}\nGemini:"
 
-    response = client.models.generate_content(
+    response = client.models.generate_content(  
         model="gemini-2.0-flash",
         contents=full_prompt
     )

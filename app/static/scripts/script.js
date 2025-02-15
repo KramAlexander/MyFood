@@ -1,178 +1,4 @@
-function openForm() {
-  document.querySelector(".formDiv").style.display = "flex";
-}
-
-function closeForm() {
-  document.querySelector(".formDiv").style.display = "none";
-}
-
-const stars = document.querySelectorAll(".ratings span");
-let ratings = [];
-
-for (let star of stars) {
-  star.addEventListener("click", function () {
-    stars.forEach((siblingStar) => siblingStar.removeAttribute("data-clicked"));
-    this.setAttribute("data-clicked", "true");
-    let rating = this.dataset.rating;
-    let data = {
-      stars: rating,
-    };
-    ratings.push(data);
-    localStorage.setItem("rating", JSON.stringify(ratings));
-  });
-}
-function openIngredientsModal() {
-  const formDiv = document.querySelector(".ingredientsDiv");
-  const modal = document.getElementById("ingredientsForm");
-
-  if (formDiv && modal) {
-    formDiv.style.display = "flex";
-    modal.style.display = "flex";
-  } else {
-    console.error("Ingredients modal or formDiv not found.");
-  }
-}
-
-function closeIngredientsModal() {
-  const formDiv = document.querySelector(".ingredientsDiv");
-  const modal = document.getElementById("ingredientsForm");
-
-  if (formDiv && modal) {
-    formDiv.style.display = "none";
-    modal.style.display = "none";
-  } else {
-    console.error("Ingredients modal or formDiv not found.");
-  }
-}
-
-function addIngredient() {
-  const name = document.getElementById("ingredient-name").value.trim();
-  const amount = document.getElementById("ingredient-amount").value.trim();
-
-  if (name && amount) {
-    const ingredientDiv = document.createElement("div");
-    ingredientDiv.className = "ingredient-item";
-
-    ingredientDiv.innerHTML = `
-        <span class="ingredient-text">${name} | ${amount}</span>
-        <span class="remove-btn" onclick="removeIngredient(this)">×</span>
-      `;
-
-    const ingredientsContainer = document.querySelector("#inputed-ingredients");
-    if (ingredientsContainer) {
-      ingredientsContainer.appendChild(ingredientDiv);
-    } else {
-      console.error("Ingredients container not found.");
-    }
-
-    closeIngredientsModal();
-    document.getElementById("ingredient-name").value = "";
-    document.getElementById("ingredient-amount").value = "";
-  } else {
-    alert("Please fill out both fields.");
-  }
-}
-
-function removeIngredient(button) {
-  const ingredientDiv = button.parentElement;
-  if (ingredientDiv) {
-    ingredientDiv.remove();
-
-    const ingredientsContainer = document.querySelector(
-      "#ingredients-container"
-    );
-    if (ingredientsContainer && ingredientsContainer.children.length === 0) {
-      ingredientsContainer.appendChild(placeholderText);
-    }
-  } else {
-    console.error("Ingredient item not found.");
-  }
-}
-
-async function submitRecipe() {
-  try {
-    const name = document.getElementById("name-input").value.trim();
-    const description = document
-      .getElementById("description-input")
-      .value.trim();
-    const imageInput = document.getElementById("image-input");
-    const image = imageInput.files[0];
-
-    if (!image) {
-      alert("Please select an image.");
-      return;
-    }
-
-    const filename = image.name;
-
-    let formData = new FormData();
-    formData.append("image", image);
-
-    const uploadResponse = await fetch("/upload/image", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!uploadResponse.ok) {
-      alert("Image upload failed. Please try again.");
-      return;
-    }
-
-    const duration = document.getElementById("number-input").value.trim();
-    const difficulty = document.querySelector(
-      ".ratings span[data-clicked='true']"
-    )?.dataset.rating;
-
-    if (!name || !description || !filename || !duration || !difficulty) {
-      alert("Please fill out all fields.");
-      return;
-    }
-
-    const ingredients = [];
-    document.querySelectorAll(".ingredient-item span").forEach((item) => {
-      const [ingredientName, ingredientAmount] = item.textContent.split(" | ");
-      if (ingredientName && ingredientAmount) {
-        ingredients.push(
-          `${ingredientName.trim()} (${ingredientAmount.trim()})`
-        );
-      }
-    });
-
-    if (ingredients.length === 0) {
-      alert("Please add at least one ingredient.");
-      return;
-    }
-
-    const data = {
-      name,
-      description,
-      image_url: `../static/uploads/${filename}`,
-      duration: parseInt(duration, 10),
-      ingredients,
-      difficulty: parseFloat(difficulty),
-    };
-
-    const response = await fetch("/api/recipes/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      alert("Recipe created successfully!");
-      console.log("New Recipe:", await response.json());
-      location.reload();
-    } else {
-      alert("Failed to create recipe. Please try again.");
-      console.error("Error:", await response.json());
-    }
-  } catch (error) {
-    console.error("Error submitting recipe:", error);
-    alert("An unexpected error occurred. Please try again.");
-  }
-}
+// website startup
 
 document.addEventListener("DOMContentLoaded", async () => {
   async function loadRecipes() {
@@ -258,203 +84,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     addRecipeCard(recipeData);
   });
 });
-let uploadedImageURL = "";
 
-function previewImage(input) {
-  const container = document.getElementById("image-preview-container");
-  container.innerHTML = "";
+// modal operations on windows
 
-  if (input.files && input.files[0]) {
-    const file = input.files[0];
-    const reader = new FileReader();
 
-    reader.onload = function (e) {
-      uploadedImageURL = e.target.result; // Store the image URL globally
+function openIngredientsModal() {
+  const formDiv = document.querySelector(".ingredientsDiv");
+  const modal = document.getElementById("ingredientsForm");
 
-      const img = document.createElement("img");
-      img.src = e.target.result;
-      img.alt = file.name;
-
-      const removeBtn = document.createElement("span");
-      removeBtn.textContent = "Remove";
-      removeBtn.className = "remove-btn";
-      removeBtn.onclick = function () {
-        removePreview(input);
-      };
-
-      container.appendChild(img);
-      container.appendChild(removeBtn);
-    };
-
-    reader.readAsDataURL(file);
+  if (formDiv && modal) {
+    formDiv.style.display = "flex";
+    modal.style.display = "flex";
+  } else {
+    console.error("Ingredients modal or formDiv not found.");
   }
 }
 
-function removePreview(input) {
-  const container = document.getElementById("image-preview-container");
-  input.value = "";
-  container.innerHTML = "";
-}
-document.addEventListener("DOMContentLoaded", () => {
-  const cards = document.querySelectorAll(".card");
+function closeIngredientsModal() {
+  const formDiv = document.querySelector(".ingredientsDiv");
+  const modal = document.getElementById("ingredientsForm");
 
-  const observerOptions = {
-    root: null,
-    rootMargin: "100px 0px 0px 0px", // Extend the top boundary for earlier appearance
-    threshold: [0, 0.5], // Trigger on fully invisible (0) and partially visible (0.5)
-  };
-
-  const observerCallback = (entries) => {
-    entries.forEach((entry) => {
-      const card = entry.target;
-
-      if (entry.intersectionRatio >= 0.5) {
-        // Slide in when at least 50% visible
-        card.classList.add("slide-in");
-        card.classList.remove("slide-out");
-      } else if (entry.intersectionRatio === 0) {
-        // Reset animation when completely out of view
-        card.classList.remove("slide-in");
-        card.classList.add("slide-out");
-      }
-    });
-  };
-
-  const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-  cards.forEach((card) => observer.observe(card));
-});
-let currentStep = 0;
-const steps = document.querySelectorAll(".form-step");
-const progress = document.getElementById("progress");
-const formLabel = document.getElementById("form-label");
-
-const stepLabels = [
-  "Name",
-  "Description",
-  "Image",
-  "Duration (minutes)",
-  "Difficulty",
-  "Ingredients",
-  "Review & Submit",
-];
-
-function updateLabel() {
-  formLabel.innerText = stepLabels[currentStep];
-}
-function showStep() {
-  steps.forEach((step, index) => {
-    step.classList.toggle("active", index === currentStep);
-
-    if (index === currentStep) {
-      step.classList.add("active");
-    }
-  });
-
-  progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
-
-  const dots = document.querySelectorAll(".dot");
-  dots.forEach((dot, index) => {
-    dot.classList.toggle("active", index <= currentStep);
-  });
-
-  if (currentStep === steps.length - 1) {
-    displayFinalImage();
-    dots.forEach((dot, index) => {
-      setTimeout(() => {
-        dot.classList.add("grow");
-
-        setTimeout(() => {
-          dot.classList.remove("grow");
-        }, 300);
-      }, index * 150);
-    });
-  }
-
-  updateLabel();
-}
-
-function nextStep() {
-  if (currentStep < steps.length - 1) {
-    currentStep++;
-    showStep();
+  if (formDiv && modal) {
+    formDiv.style.display = "none";
+    modal.style.display = "none";
+  } else {
+    console.error("Ingredients modal or formDiv not found.");
   }
 }
-
-function prevStep() {
-  if (currentStep > 0) {
-    currentStep--;
-    showStep();
-  }
-}
-
-showStep();
-function displayFinalImage() {
-  const finalImageContainer = document.getElementById("final-image-preview");
-  const finalTitleContainer = document.getElementById("final-title-preview");
-
-  finalImageContainer.innerHTML = "";
-  finalTitleContainer.innerHTML = "";
-
-  const recipeName = document.getElementById("name-input").value.trim();
-
-  if (uploadedImageURL) {
-    const img = document.createElement("img");
-    img.src = uploadedImageURL;
-    img.alt = "Uploaded Recipe Image";
-    img.style.maxWidth = "120px";
-    img.style.borderRadius = "8px";
-    img.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.3)";
-    img.style.margin = "0 auto";
-    img.style.display = "block";
-
-    finalImageContainer.appendChild(img);
-  }
-
-  if (recipeName) {
-    finalTitleContainer.textContent = recipeName;
-  }
-}
-document.addEventListener("DOMContentLoaded", () => {
-  const searchBtn = document.querySelector(".search");
-  const searchContainer = document.querySelector(".search-container");
-  const searchInput = document.getElementById("search-input");
-
-  searchBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    if (
-      searchContainer.style.display === "none" ||
-      searchContainer.style.display === ""
-    ) {
-      searchContainer.style.display = "block";
-      searchInput.focus();
-    } else {
-      searchContainer.style.display = "none";
-      searchInput.value = "";
-      filterCards("");
-    }
-  });
-  searchInput.addEventListener("input", function () {
-    const searchTerm = this.value.toLowerCase();
-    filterCards(searchTerm);
-  });
-
-  function filterCards(searchTerm) {
-    const cards = document.querySelectorAll(".card");
-
-    cards.forEach((card) => {
-      const titleElem = card.querySelector("h2");
-      const titleText = titleElem ? titleElem.textContent.toLowerCase() : "";
-
-      if (titleText.includes(searchTerm)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  }
-});
 
 function openRecipeDetails(recipe) {
   document.getElementById("recipe-title").textContent = recipe.name;
@@ -573,23 +229,361 @@ function updateRecipeDetails(recipe) {
   });
 }
 
-function sendMessage() {
-  const inputField = document.getElementById("chat-input");
-  const message = inputField.value.trim();
-  if (message === "") return;
+// ingredients logic
 
-  const messagesContainer = document.getElementById("chat-messages");
-  const userMessage = document.createElement("div");
-  userMessage.textContent = `You: ${message}`;
-  userMessage.style.padding = "5px 10px";
-  userMessage.style.marginBottom = "5px";
-  userMessage.style.background = "rgba(255, 255, 255, 0.2)";
-  userMessage.style.borderRadius = "5px";
-  messagesContainer.appendChild(userMessage);
+function addIngredient() {
+  const name = document.getElementById("ingredient-name").value.trim();
+  const amount = document.getElementById("ingredient-amount").value.trim();
 
-  inputField.value = "";
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  if (name && amount) {
+    const ingredientDiv = document.createElement("div");
+    ingredientDiv.className = "ingredient-item";
+
+    ingredientDiv.innerHTML = `
+        <span class="ingredient-text">${name} | ${amount}</span>
+        <span class="remove-btn" onclick="removeIngredient(this)">×</span>
+      `;
+
+    const ingredientsContainer = document.querySelector("#inputed-ingredients");
+    if (ingredientsContainer) {
+      ingredientsContainer.appendChild(ingredientDiv);
+    } else {
+      console.error("Ingredients container not found.");
+    }
+
+    closeIngredientsModal();
+    document.getElementById("ingredient-name").value = "";
+    document.getElementById("ingredient-amount").value = "";
+  } else {
+    alert("Please fill out both fields.");
+  }
 }
+
+function removeIngredient(button) {
+  const ingredientDiv = button.parentElement;
+  if (ingredientDiv) {
+    ingredientDiv.remove();
+
+    const ingredientsContainer = document.querySelector(
+      "#ingredients-container"
+    );
+    if (ingredientsContainer && ingredientsContainer.children.length === 0) {
+      ingredientsContainer.appendChild(placeholderText);
+    }
+  } else {
+    console.error("Ingredient item not found.");
+  }
+}
+
+// form logic
+
+const stars = document.querySelectorAll(".ratings span");
+let ratings = [];
+
+for (let star of stars) {
+  star.addEventListener("click", function () {
+    stars.forEach((siblingStar) => siblingStar.removeAttribute("data-clicked"));
+    this.setAttribute("data-clicked", "true");
+    let rating = this.dataset.rating;
+    let data = {
+      stars: rating,
+    };
+    ratings.push(data);
+    localStorage.setItem("rating", JSON.stringify(ratings));
+  });
+}
+
+async function submitRecipe() {
+  try {
+    const name = document.getElementById("name-input").value.trim();
+    const description = document
+      .getElementById("description-input")
+      .value.trim();
+    const imageInput = document.getElementById("image-input");
+    const image = imageInput.files[0];
+
+    if (!image) {
+      alert("Please select an image.");
+      return;
+    }
+
+    const filename = image.name;
+
+    let formData = new FormData();
+    formData.append("image", image);
+
+    const uploadResponse = await fetch("/upload/image", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!uploadResponse.ok) {
+      alert("Image upload failed. Please try again.");
+      return;
+    }
+
+    const duration = document.getElementById("number-input").value.trim();
+    const difficulty = document.querySelector(
+      ".ratings span[data-clicked='true']"
+    )?.dataset.rating;
+
+    if (!name || !description || !filename || !duration || !difficulty) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    const ingredients = [];
+    document.querySelectorAll(".ingredient-item span").forEach((item) => {
+      const [ingredientName, ingredientAmount] = item.textContent.split(" | ");
+      if (ingredientName && ingredientAmount) {
+        ingredients.push(
+          `${ingredientName.trim()} (${ingredientAmount.trim()})`
+        );
+      }
+    });
+
+    if (ingredients.length === 0) {
+      alert("Please add at least one ingredient.");
+      return;
+    }
+
+    const data = {
+      name,
+      description,
+      image_url: `../static/uploads/${filename}`,
+      duration: parseInt(duration, 10),
+      ingredients,
+      difficulty: parseFloat(difficulty),
+    };
+
+    const response = await fetch("/api/recipes/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      alert("Recipe created successfully!");
+      console.log("New Recipe:", await response.json());
+      location.reload();
+    } else {
+      alert("Failed to create recipe. Please try again.");
+      console.error("Error:", await response.json());
+    }
+  } catch (error) {
+    console.error("Error submitting recipe:", error);
+    alert("An unexpected error occurred. Please try again.");
+  }
+}
+
+let uploadedImageURL = "";
+
+function previewImage(input) {
+  const container = document.getElementById("image-preview-container");
+  container.innerHTML = "";
+
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      uploadedImageURL = e.target.result; // Store the image URL globally
+
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.alt = file.name;
+
+      const removeBtn = document.createElement("span");
+      removeBtn.textContent = "Remove";
+      removeBtn.className = "remove-btn";
+      removeBtn.onclick = function () {
+        removePreview(input);
+      };
+
+      container.appendChild(img);
+      container.appendChild(removeBtn);
+    };
+
+    reader.readAsDataURL(file);
+  }
+}
+
+function removePreview(input) {
+  const container = document.getElementById("image-preview-container");
+  input.value = "";
+  container.innerHTML = "";
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".card");
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "100px 0px 0px 0px", // Extend the top boundary for earlier appearance
+    threshold: [0, 0.5], // Trigger on fully invisible (0) and partially visible (0.5)
+  };
+
+  const observerCallback = (entries) => {
+    entries.forEach((entry) => {
+      const card = entry.target;
+
+      if (entry.intersectionRatio >= 0.5) {
+        // Slide in when at least 50% visible
+        card.classList.add("slide-in");
+        card.classList.remove("slide-out");
+      } else if (entry.intersectionRatio === 0) {
+        // Reset animation when completely out of view
+        card.classList.remove("slide-in");
+        card.classList.add("slide-out");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+  cards.forEach((card) => observer.observe(card));
+});
+let currentStep = 0;
+const steps = document.querySelectorAll(".form-step");
+const progress = document.getElementById("progress");
+const formLabel = document.getElementById("form-label");
+
+const stepLabels = [
+  "Name",
+  "Description",
+  "Image",
+  "Duration (minutes)",
+  "Difficulty",
+  "Ingredients",
+  "Review & Submit",
+];
+
+function updateLabel() {
+  formLabel.innerText = stepLabels[currentStep];
+}
+function showStep() {
+  if (!steps.length) {
+    return;
+  }
+
+  steps.forEach((step, index) => {
+    step.classList.toggle("active", index === currentStep);
+
+    if (index === currentStep) {
+      step.classList.add("active");
+    }
+  });
+
+  progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
+
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach((dot, index) => {
+    dot.classList.toggle("active", index <= currentStep);
+  });
+
+  if (currentStep === steps.length - 1) {
+    displayFinalImage();
+    dots.forEach((dot, index) => {
+      setTimeout(() => {
+        dot.classList.add("grow");
+
+        setTimeout(() => {
+          dot.classList.remove("grow");
+        }, 300);
+      }, index * 150);
+    });
+  }
+
+  updateLabel();
+}
+
+function nextStep() {
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    showStep();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    showStep();
+  }
+}
+
+showStep();
+function displayFinalImage() {
+  const finalImageContainer = document.getElementById("final-image-preview");
+  const finalTitleContainer = document.getElementById("final-title-preview");
+
+  finalImageContainer.innerHTML = "";
+  finalTitleContainer.innerHTML = "";
+
+  const recipeName = document.getElementById("name-input").value.trim();
+
+  if (uploadedImageURL) {
+    const img = document.createElement("img");
+    img.src = uploadedImageURL;
+    img.alt = "Uploaded Recipe Image";
+    img.style.maxWidth = "120px";
+    img.style.borderRadius = "8px";
+    img.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.3)";
+    img.style.margin = "0 auto";
+    img.style.display = "block";
+
+    finalImageContainer.appendChild(img);
+  }
+
+  if (recipeName) {
+    finalTitleContainer.textContent = recipeName;
+  }
+}
+
+// filter logic
+
+document.addEventListener("DOMContentLoaded", () => {
+  const searchBtn = document.querySelector(".search");
+  const searchContainer = document.querySelector(".search-container");
+  const searchInput = document.getElementById("search-input");
+
+  searchBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (
+      searchContainer.style.display === "none" ||
+      searchContainer.style.display === ""
+    ) {
+      searchContainer.style.display = "block";
+      searchInput.focus();
+    } else {
+      searchContainer.style.display = "none";
+      searchInput.value = "";
+      filterCards("");
+    }
+  });
+  searchInput.addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    filterCards(searchTerm);
+  });
+
+  function filterCards(searchTerm) {
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach((card) => {
+      const titleElem = card.querySelector("h2");
+      const titleText = titleElem ? titleElem.textContent.toLowerCase() : "";
+
+      if (titleText.includes(searchTerm)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+});
+
+// chat
 async function sendMessage() {
   const inputField = document.getElementById("chat-input");
   const chatMessages = document.getElementById("chat-messages");
@@ -642,12 +636,3 @@ function appendMessage(sender, text, className) {
   messageDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
   chatMessages.appendChild(messageDiv);
 }
-
-document
-  .getElementById("chat-input")
-  .addEventListener("keypress", function (event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      sendMessage();
-    }
-  });
