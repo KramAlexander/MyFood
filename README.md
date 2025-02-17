@@ -10,6 +10,10 @@ You can:
 ![image](https://github.com/user-attachments/assets/f02d692e-0309-4ab2-9a2f-c6777952a4c9)
 ![image](https://github.com/user-attachments/assets/b9c9a91b-243e-4b5b-82cd-de1ac3459568)
 
+## Usage
+- You need to create a .env-file with your google-gemini key in the same directory as app.py
+(format: GEMINI_API_KEY=[INSERT_YOUR_KEY_HERE])
+- Run with docker
 ## Running with docker
 docker-compose up --build -d
 
