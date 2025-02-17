@@ -433,7 +433,7 @@ body {
     transform: scale(1.2);
     cursor:pointer;
   }
-  /* Slider Container */
+
   .slider-container {
     display: flex;
     overflow: hidden;
